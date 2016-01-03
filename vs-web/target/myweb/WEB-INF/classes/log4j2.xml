@@ -1,0 +1,18 @@
+<configuration status="debug">
+    <appenders>
+        <Console name="consolePrint" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %c{1} - %msg%n"/>
+        </Console>
+        <Console name="consolePrint2" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level fk-%c{1} - %msg%n"/>
+        </Console>
+    </appenders>
+    <loggers>
+        <root level="info">
+            <appender-ref ref="consolePrint"/>
+        </root>
+        <Logger name="com.fukang" level="trace" additivity="false">
+            <AppenderRef ref="consolePrint2"/>
+        </Logger>
+    </loggers>
+</configuration>
