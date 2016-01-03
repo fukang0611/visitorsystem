@@ -35,7 +35,7 @@ public class DepartModel {
     private Date createTime; // 创建时间
 
     @OneToMany(mappedBy = "depart", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    Set<StaffModel> staffs = new TreeSet<>();
+    Set<StaffModel> staffs = new TreeSet<>(); // 员工
 
     public DepartModel() {
     }
