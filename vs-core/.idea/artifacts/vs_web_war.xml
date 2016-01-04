@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="vs-web:war">
+    <output-path>$PROJECT_DIR$/../vs-web/target</output-path>
+    <root id="archive" name="vs-web.war">
+      <element id="artifact" artifact-name="vs-web:war exploded" />
+    </root>
+  </artifact>
+</component>

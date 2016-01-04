@@ -74,6 +74,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label for="add_departCode" class="col-sm-2 control-label">员工部门</label>
+
+                                    <div class="col-sm-10">
+                                        <select id="add_departCode" name="departCode" class="form-control">
+                                            <option value="-1">选择员工部门</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label for="add_officeTel" class="col-sm-2 control-label">办公电话</label>
 
                                     <div class="col-sm-10">
@@ -136,6 +145,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label for="edit_departCode" class="col-sm-2 control-label">员工部门</label>
+
+                                    <div class="col-sm-10">
+                                        <select id="edit_departCode" name="departCode" class="form-control">
+                                            <option value="-1">选择员工部门</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label for="edit_officeTel" class="col-sm-2 control-label">办公电话</label>
 
                                     <div class="col-sm-10">
@@ -168,7 +186,7 @@
                     </div>
                 </div>
             </div>
-            <!-- 新增员工模态框 结束 -->
+            <!-- 修改员工模态框 结束 -->
         </div>
         <!-- 主体内容 结束 -->
     </div>
@@ -189,11 +207,14 @@
     var $table = $('#table');
     var $remove = $('#removeStaff');
     var $add = $('#addStaff');
+    //    var $departCode = $("#add_departCode");
+    var $departCode = $("select[name='departCode']");
     var selections = [];
 
     // 页面加载完成后执行
     $(function () {
         initTable(); // 初始化表格
+        getDepartList(); // 获取部门列表数据
     });
 
     // 初始化表格
@@ -326,7 +347,7 @@
         ].join('');
     }
 
-    // 删除部门
+    // 删除人员
     function delStaff(id) {
         var ids = id ? id : getIdSelections();
         $.post("<%=path%>/staff/delStaffByIds.do?ids=" + ids, function (result) {
@@ -342,14 +363,16 @@
         }, "json");
     }
 
-    // 编辑部门
+    // 编辑人员
     function editStaff(id) {
         $.post("<%=path%>/staff/editStaff.do?id=" + id, function (result) {
             if (result.status == "success") {
+                getDepartList();
                 var data = result.data;
                 $("#id").val(data.id);
                 $("#edit_name").val(data.name);
                 $("#edit_sex").val(data.sex);
+                $("#edit_departCode").val(data.depart.code);
                 $("#edit_officeTel").val(data.officeTel);
                 $("#edit_mobileTel").val(data.mobileTel);
                 $("#edit_sortOrder").val(data.sortOrder);
@@ -367,12 +390,27 @@
         })
     }
 
-    // 新增部门
+    // 新增人员
     function addStaff() {
         var $addform = $("#addform");
         $.post($addform.attr("action"), $addform.serialize(), function (result) {
             $('#addStaffModal').modal('hide');
             history.go(0);
+        })
+    }
+
+    // 获取部门列表数据
+    function getDepartList() {
+
+        $.post("<%=path%>/depart/getDepartOpts.do", function (result) {
+            if (result.status == "success") {
+                var data = result.data;
+                var html = "<option value='-1'>请选择部门</option>";
+                for (var i = 0; i < data.length; i++) {
+                    html += "<option value='" + data[i].code + "'>" + data[i].name + "</option>";
+                }
+                $departCode.html(html);
+            }
         })
     }
 

@@ -1,6 +1,8 @@
 package com.fk.core.controller;
 
+import com.fk.core.model.DepartModel;
 import com.fk.core.model.StaffModel;
+import com.fk.core.service.IDepartService;
 import com.fk.core.service.IStaffService;
 import com.fk.core.utils.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/staff")
@@ -19,6 +22,8 @@ public class StaffController {
 
     @Autowired
     IStaffService iStaffService;
+    @Autowired
+    IDepartService iDepartService;
 
     @RequestMapping("/staffList")
     @ResponseBody
@@ -33,17 +38,26 @@ public class StaffController {
 
     @RequestMapping("/addStaff")
     @ResponseBody
-    public Object addStaff(StaffModel record) {
+    public Object addStaff(StaffModel record, String departCode) {
 
+        DepartModel depart = iDepartService.getDepartByCode(departCode);
+        record.setDepart(depart);
         record.setCreateTime(new Date());
-        boolean result = iStaffService.addStaff(record);
-        return result ? "success" : "fail";
+        iStaffService.addStaff(record);
+
+        StaffModel staff = iStaffService.getStaffByName(record.getName());
+        depart.getStaffs().add(staff);
+        iDepartService.modDepart(depart);
+
+        return "success";
     }
 
     @RequestMapping("/doEditStaff")
     @ResponseBody
-    public Object doEditStaff(StaffModel record) {
+    public Object doEditStaff(StaffModel record, String departCode) {
 
+        DepartModel depart = iDepartService.getDepartByCode(departCode);
+        record.setDepart(depart);
         boolean result = iStaffService.modStaff(record);
         return result ? "success" : "fail";
     }

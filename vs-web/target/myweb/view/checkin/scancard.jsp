@@ -71,13 +71,61 @@
                     </select>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-info" onclick="scanCard();">预览打印信息</button>
+                    <button class="btn btn-info" onclick="prePrint();">预览打印信息</button>
                 </div>
             </div>
         </div>
         <!-- 主体内容 结束 -->
     </div>
     <!-- 页面主体栅格布局 结束 -->
+    <!-- 打印预览模态框 -->
+    <div class="modal fade" id="printModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h4 class="modal-title" id="printModalLabel">访客信息打印预览</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered table-hover">
+                        <tr>
+                            <th class="text-center" width="15%">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</th>
+                            <td id="print_name" width="35%">付康</td>
+                            <th class="text-center" width="15%">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</th>
+                            <td id="print_sex" width="35%">男</td>
+                        </tr>
+                        <tr>
+                            <th class="text-center">证件号码</th>
+                            <td id="print_id">410103199011100011</td>
+                            <th class="text-center">籍&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;贯</th>
+                            <td id="print_location">河南郑州</td>
+                        </tr>
+                        <tr>
+                            <th class="text-center">待办业务</th>
+                            <td id="print_business">民行</td>
+                            <th class="text-center">办事部门</th>
+                            <td id="print_depart">民行科</td>
+                        </tr>
+                        <tr>
+                            <th class="text-center">办事人员</th>
+                            <td id="print_staff">王小虎</td>
+                            <th class="text-center">办公电话</th>
+                            <td id="print_officeTel">2239</td>
+                        </tr>
+                        <tr>
+                            <th class="text-center">来访时间</th>
+                            <td colspan="3" id="print_time">2015-12-31 15:33</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="doPrint();">确认打印</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 修改员工模态框 结束 -->
 </div>
 <!-- 页面主体 结束 -->
 <!-- jquery core -->
@@ -101,36 +149,13 @@
         $.post("<%=path%>/depart/getDepartOpts.do", function (result) {
             if (result.status == "success") {
                 var data = result.data;
-                console.log(data);
                 var html;
                 for (var i = 0; i < data.length; i++) {
-                    html += "<option value='" + data[i].code + "'>" + data[i].name + "</option>";
+                    html += "<option value='" + data[i].code + "'>" + data[i].business + "----" + data[i].name + "</option>";
                 }
                 $business.append(html);
             }
         })
-    }
-
-    function scanCard() {
-        $.post("<%=path%>/visitor/scanInfo.do",
-                {
-                    "id": "410103199206111111",
-                    "name": "付康",
-                    "sex": "男",
-                    "location": "河南郑州"
-                },
-                function (result) {
-                    console.log(result);
-                    if (result.status == "success") {
-                        alert("scan card success!");
-                        $("#id").html(result.id);
-                        $("#name").html(result.name);
-                        $("#sex").html(result.sex);
-                        $("#location").html(result.location);
-                    } else {
-                        alert("scan card failed!");
-                    }
-                }, "json");
     }
 
     function getStaffOpts() {
@@ -142,11 +167,73 @@
                 console.log(data);
                 var html;
                 for (var i = 0; i < data.length; i++) {
-                    html += "<option value='" + data[i].id + "'>" + data[i].name + "</option>";
+                    html += "<option value='" + data[i].id + "'>" + data[i].name + " ( " + data[i].officeTel + " ) " + "</option>";
                 }
                 $staff.html(html);
             }
         })
+    }
+
+    function scanCard() {
+        //TODO 通过接口读取身份证信息
+        $.post("<%=path%>/visitor/scanInfo.do",
+                {
+                    "id": "410103199206111111",
+                    "name": "付康",
+                    "sex": "男",
+                    "location": "河南郑州"
+                },
+                function (result) {
+                    if (result.status == "success") {
+                        $("#id").html(result.id);
+                        $("#name").html(result.name);
+                        $("#sex").html(result.sex);
+                        $("#location").html(result.location);
+                    } else {
+                        alert("scan card failed!");
+                    }
+                }, "json");
+    }
+
+    function prePrint() {
+
+        $("#print_name").html($("#name").html());
+        $("#print_sex").html($("#sex").html());
+        $("#print_id").html($("#id").html());
+        $("#print_location").html($("#location").html());
+
+        $("#print_business").html($business.find("option:selected").text().substring(0, 2));
+        $("#print_depart").html($business.find("option:selected").text().substring(6));
+
+        var staff_select = $staff.find("option:selected").text();
+        $("#print_staff").html(staff_select.substring(0, 3));
+        $("#print_officeTel").html($staff.find("option:selected").text().substring(staff_select.indexOf("(") + 1, staff_select.indexOf(")")));
+
+        var d = new Date();
+        var datetime = (d.getFullYear() + "-" +
+        ("0" + (d.getMonth() + 1)).slice(-2) + "-" +
+        ("0" + d.getDate()).slice(-2) + " " +
+        ("0" + d.getHours()).slice(-2) + ":" +
+        ("0" + d.getMinutes()).slice(-2));
+        $("#print_time").html(datetime);
+
+        $('#printModal').modal('show');
+
+    }
+
+    function doPrint() {
+
+        var name = $("#print_name").html();
+        var sex = $("#print_sex").html();
+        var id = $("#print_id").html();
+        var location = $("#print_location").html();
+        var business = $("#print_business").html();
+        var depart = $("#print_depart").html();
+        var staff = $("#print_staff").html();
+        var officeTel = $("#print_officeTel").html();
+        var $printdata = [];
+        $printdata.push(name, sex, id, location, business, depart, staff, officeTel);
+        alert("要打印的信息为:" + $printdata.toString());
     }
 </script>
 </body>

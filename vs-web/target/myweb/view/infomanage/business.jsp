@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+    <title>职能管理</title>
     <!-- Bootstrap 样式 -->
     <link href="<%=path%>/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="all">
     <!-- Bootstrap 表格 -->
@@ -23,10 +23,10 @@
             <!-- 表格工具栏 -->
             <div id="toolbar">
                 <button id="addDepart" class="btn btn-info">
-                    <i class="glyphicon glyphicon-plus"></i> 新增业务
+                    <i class="glyphicon glyphicon-plus"></i> 新增部门
                 </button>
                 <button id="removeDepart" class="btn btn-danger" disabled>
-                    <i class="glyphicon glyphicon-remove"></i> 删除业务
+                    <i class="glyphicon glyphicon-remove"></i> 删除部门
                 </button>
             </div>
             <!-- 表格主体 -->
@@ -73,11 +73,81 @@
                                                placeholder="部门名称">
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label for="business" class="col-sm-2 control-label">部门业务</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="business" name="business" type="text" class="form-control"
+                                               placeholder="部门业务">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sortOrder" class="col-sm-2 control-label">部门序号</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="sortOrder" name="sortOrder" type="text" class="form-control"
+                                               placeholder="部门序号">
+                                    </div>
+                                </div>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                             <button type="button" class="btn btn-primary" onclick="addDepart();">确认</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 新增部门模态框 结束 -->
+            <!-- 修改部门模态框 -->
+            <div class="modal fade" id="editDepartModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                            <h4 class="modal-title" id="editModalLabel">编辑部门信息</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" id="editform" action="<%=path%>/depart/doEditDepart.do">
+                                <input id="id" name="id" type="hidden"/>
+
+                                <div class="form-group">
+                                    <label for="code" class="col-sm-2 control-label">部门代码</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="code2" name="code" type="text" class="form-control"
+                                               placeholder="部门代码">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="col-sm-2 control-label">部门名称</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="name2" name="name" type="text" class="form-control"
+                                               placeholder="部门名称">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="business" class="col-sm-2 control-label">部门业务</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="business2" name="business" type="text" class="form-control"
+                                               placeholder="部门业务">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sortOrder" class="col-sm-2 control-label">部门序号</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="sortOrder2" name="sortOrder" type="text" class="form-control"
+                                               placeholder="部门序号">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" onclick="doEditDepart();">确认</button>
                         </div>
                     </div>
                 </div>
@@ -135,6 +205,19 @@
                     {
                         title: '部门名称',
                         field: 'name',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true
+                    },
+                    {
+                        title: '部门业务',
+                        field: 'business',
+                        align: 'center',
+                        valign: 'middle'
+                    },
+                    {
+                        title: '部门序号',
+                        field: 'sortOrder',
                         align: 'center',
                         valign: 'middle',
                         sortable: true
@@ -238,8 +321,25 @@
 
     // 编辑部门
     function editDepart(id) {
-        $.post("<%=path%>/depart/editDepart.do?id=" + id, function () {
+        $.post("<%=path%>/depart/editDepart.do?id=" + id, function (result) {
+            if (result.status == "success") {
+                var data = result.data;
+                $("#id").val(data.id);
+                $("#code2").val(data.code);
+                $("#name2").val(data.name);
+                $("#business2").val(data.business);
+                $("#sortOrder2").val(data.sortOrder);
+                $('#editDepartModal').modal('show');
+            }
+        })
+    }
 
+    // 保存编辑
+    function doEditDepart() {
+        var $editform = $("#editform");
+        $.post($editform.attr("action"), $editform.serialize(), function (result) {
+            $('#editDepartModal').modal('hide');
+            history.go(0);
         })
     }
 
@@ -247,8 +347,8 @@
     function addDepart() {
         var $addform = $("#addform");
         $.post($addform.attr("action"), $addform.serialize(), function (result) {
-            $("#table").refresh();
             $('#addDepartModal').modal('hide');
+            history.go(0);
         })
     }
 

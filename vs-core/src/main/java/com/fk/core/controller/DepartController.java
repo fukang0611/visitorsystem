@@ -88,13 +88,18 @@ public class DepartController {
     public Object getStaffOpts(String code) {
 
         DepartModel depart = iDepartService.getDepartByCode(code);
+//        List staffs = new ArrayList<>(depart.getStaffs());
 
-        // @Test 给选择部门添加人员信息,用于测试
-        StaffModel staff = iStaffService.getStaffByID("1");
-        depart.getStaffs().add(staff);
-        iDepartService.modDepart(depart);
+        List<Map<String, String>> staffs = new ArrayList<>();
 
-        List staffs = new ArrayList<>(depart.getStaffs());
+        depart.getStaffs().forEach(staff -> {
+            Map<String, String> map = new HashMap<>();
+            map.put("id", staff.getId());
+            map.put("name", staff.getName());
+            map.put("officeTel", staff.getOfficeTel());
+            staffs.add(map);
+        });
+
         Map<String, Object> result = new HashMap<>();
         result.put("status", "success");
         result.put("data", staffs);
