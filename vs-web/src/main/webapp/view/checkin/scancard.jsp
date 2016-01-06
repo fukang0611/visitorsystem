@@ -231,9 +231,19 @@
         var depart = $("#print_depart").html();
         var staff = $("#print_staff").html();
         var officeTel = $("#print_officeTel").html();
+        var printTime = $("#print_time").html();
         var $printdata = [];
-        $printdata.push(name, sex, id, location, business, depart, staff, officeTel);
-        alert("要打印的信息为:" + $printdata.toString());
+        $printdata.push(name, sex, id, location, business, depart, staff, officeTel, printTime);
+
+        $.post("<%=path%>/record/add.do", {
+            id: id,
+            name: name,
+            sex: sex,
+            location: location,
+            staffID: $staff.val()
+        }, function (result) {
+            console.log(result);
+        }, "json");
     }
 </script>
 </body>

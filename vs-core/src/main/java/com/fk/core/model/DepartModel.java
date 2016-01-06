@@ -89,8 +89,9 @@ public class DepartModel {
         this.sortOrder = sortOrder;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public String getCreateTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(createTime);
     }
 
     public void setCreateTime(Date createTime) {

@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>员工管理</title>
+    <title></title>
     <!-- Bootstrap 样式 -->
     <link href="<%=path%>/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="all">
     <!-- Bootstrap 表格 -->
@@ -22,11 +22,11 @@
         <div class="main">
             <!-- 表格工具栏 -->
             <div id="toolbar">
-                <button id="addStaff" class="btn btn-info">
-                    <i class="glyphicon glyphicon-plus"></i> 新增员工
+                <button id="addDepart" class="btn btn-info">
+                    <i class="glyphicon glyphicon-plus"></i> 新增部门
                 </button>
-                <button id="removeStaff" class="btn btn-danger" disabled>
-                    <i class="glyphicon glyphicon-remove"></i> 删除员工
+                <button id="removeDepart" class="btn btn-danger" disabled>
+                    <i class="glyphicon glyphicon-remove"></i> 删除部门
                 </button>
             </div>
             <!-- 表格主体 -->
@@ -43,150 +43,116 @@
                    data-page-list="[10, 25, 50, 100]"
                    data-show-footer="false"
                    data-side-pagination="server"
-                   data-url="<%=path%>/staff/staffList.do"
+                   data-url="<%=path%>/depart/departList.do"
                    data-response-handler="responseHandler">
             </table>
             <!-- 表格主体 结束 -->
-            <!-- 新增员工模态框 -->
-            <div class="modal fade" id="addStaffModal" tabindex="-1">
+            <!-- 新增部门模态框 -->
+            <div class="modal fade" id="addDepartModal" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">新增员工信息</h4>
+                            <h4 class="modal-title" id="myModalLabel">新增部门信息</h4>
                         </div>
                         <div class="modal-body">
-                            <form class="form-horizontal" id="addform" action="<%=path%>/staff/addStaff.do">
+                            <form class="form-horizontal" id="addform" action="<%=path%>/depart/addDepart.do">
                                 <div class="form-group">
-                                    <label for="add_name" class="col-sm-2 control-label">员工姓名</label>
+                                    <label for="code" class="col-sm-2 control-label">部门代码</label>
 
                                     <div class="col-sm-10">
-                                        <input id="add_name" name="name" type="text" class="form-control"
-                                               placeholder="员工姓名">
+                                        <input id="code" name="code" type="text" class="form-control"
+                                               placeholder="部门代码">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="add_sex" class="col-sm-2 control-label">员工性别</label>
+                                    <label for="name" class="col-sm-2 control-label">部门名称</label>
 
                                     <div class="col-sm-10">
-                                        <input id="add_sex" name="sex" type="text" class="form-control"
-                                               placeholder="员工性别">
+                                        <input id="name" name="name" type="text" class="form-control"
+                                               placeholder="部门名称">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="add_departCode" class="col-sm-2 control-label">员工部门</label>
+                                    <label for="business" class="col-sm-2 control-label">部门业务</label>
 
                                     <div class="col-sm-10">
-                                        <select id="add_departCode" name="departCode" class="form-control">
-                                            <option value="-1">选择员工部门</option>
-                                        </select>
+                                        <input id="business" name="business" type="text" class="form-control"
+                                               placeholder="部门业务">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="add_officeTel" class="col-sm-2 control-label">办公电话</label>
+                                    <label for="sortOrder" class="col-sm-2 control-label">部门序号</label>
 
                                     <div class="col-sm-10">
-                                        <input id="add_officeTel" name="officeTel" type="text" class="form-control"
-                                               placeholder="办公电话">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="add_mobileTel" class="col-sm-2 control-label">手机号码</label>
-
-                                    <div class="col-sm-10">
-                                        <input id="add_mobileTel" name="mobileTel" type="text" class="form-control"
-                                               placeholder="手机号码">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="add_sortOrder" class="col-sm-2 control-label">员工序号</label>
-
-                                    <div class="col-sm-10">
-                                        <input id="add_sortOrder" name="sortOrder" type="text" class="form-control"
-                                               placeholder="员工序号">
+                                        <input id="sortOrder" name="sortOrder" type="text" class="form-control"
+                                               placeholder="部门序号">
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                            <button type="button" class="btn btn-primary" onclick="addStaff();">确认</button>
+                            <button type="button" class="btn btn-primary" onclick="addDepart();">确认</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- 新增员工模态框 结束 -->
-            <!-- 修改员工模态框 -->
-            <div class="modal fade" id="editStaffModal" tabindex="-1">
+            <!-- 新增部门模态框 结束 -->
+            <!-- 修改部门模态框 -->
+            <div class="modal fade" id="editDepartModal" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                            <h4 class="modal-title" id="editModalLabel">编辑员工信息</h4>
+                            <h4 class="modal-title" id="editModalLabel">编辑部门信息</h4>
                         </div>
                         <div class="modal-body">
-                            <form class="form-horizontal" id="editform" action="<%=path%>/staff/doEditStaff.do">
+                            <form class="form-horizontal" id="editform" action="<%=path%>/depart/doEditDepart.do">
                                 <input id="id" name="id" type="hidden"/>
 
                                 <div class="form-group">
-                                    <label for="edit_name" class="col-sm-2 control-label">员工姓名</label>
+                                    <label for="code" class="col-sm-2 control-label">部门代码</label>
 
                                     <div class="col-sm-10">
-                                        <input id="edit_name" name="name" type="text" class="form-control"
-                                               placeholder="员工姓名">
+                                        <input id="code2" name="code" type="text" class="form-control"
+                                               placeholder="部门代码">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="edit_sex" class="col-sm-2 control-label">员工性别</label>
+                                    <label for="name" class="col-sm-2 control-label">部门名称</label>
 
                                     <div class="col-sm-10">
-                                        <input id="edit_sex" name="sex" type="text" class="form-control"
-                                               placeholder="员工性别">
+                                        <input id="name2" name="name" type="text" class="form-control"
+                                               placeholder="部门名称">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="edit_departCode" class="col-sm-2 control-label">员工部门</label>
+                                    <label for="business" class="col-sm-2 control-label">部门业务</label>
 
                                     <div class="col-sm-10">
-                                        <select id="edit_departCode" name="departCode" class="form-control">
-                                            <option value="-1">选择员工部门</option>
-                                        </select>
+                                        <input id="business2" name="business" type="text" class="form-control"
+                                               placeholder="部门业务">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="edit_officeTel" class="col-sm-2 control-label">办公电话</label>
+                                    <label for="sortOrder" class="col-sm-2 control-label">部门序号</label>
 
                                     <div class="col-sm-10">
-                                        <input id="edit_officeTel" name="officeTel" type="text" class="form-control"
-                                               placeholder="办公电话">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="edit_mobileTel" class="col-sm-2 control-label">手机号码</label>
-
-                                    <div class="col-sm-10">
-                                        <input id="edit_mobileTel" name="mobileTel" type="text" class="form-control"
-                                               placeholder="手机号码">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="edit_sortOrder" class="col-sm-2 control-label">员工序号</label>
-
-                                    <div class="col-sm-10">
-                                        <input id="edit_sortOrder" name="sortOrder" type="text" class="form-control"
-                                               placeholder="员工序号">
+                                        <input id="sortOrder2" name="sortOrder" type="text" class="form-control"
+                                               placeholder="部门序号">
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                            <button type="button" class="btn btn-primary" onclick="doEditStaff();">确认</button>
+                            <button type="button" class="btn btn-primary" onclick="doEditDepart();">确认</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- 修改员工模态框 结束 -->
+            <!-- 新增部门模态框 结束 -->
         </div>
         <!-- 主体内容 结束 -->
     </div>
@@ -205,16 +171,13 @@
 
     // 表格操作全局变量
     var $table = $('#table');
-    var $remove = $('#removeStaff');
-    var $add = $('#addStaff');
-    //    var $departCode = $("#add_departCode");
-    var $departCode = $("select[name='departCode']");
+    var $remove = $('#removeDepart');
+    var $add = $('#addDepart');
     var selections = [];
 
     // 页面加载完成后执行
     $(function () {
         initTable(); // 初始化表格
-        getDepartList(); // 获取部门列表数据
     });
 
     // 初始化表格
@@ -233,41 +196,31 @@
                         valign: 'middle'
                     },
                     {
-                        title: '员工姓名',
+                        title: '部门代码',
+                        field: 'code',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true
+                    },
+                    {
+                        title: '部门名称',
                         field: 'name',
                         align: 'center',
-                        valign: 'middle'
+                        valign: 'middle',
+                        sortable: true
                     },
                     {
-                        title: '员工性别',
-                        field: 'sex',
+                        title: '部门业务',
+                        field: 'business',
                         align: 'center',
                         valign: 'middle'
                     },
                     {
-                        title: '所属部门',
-                        field: 'depart',
-                        align: 'center',
-                        valign: 'middle'
-                    },
-                    {
-                        title: '办公电话',
-                        field: 'officeTel',
-                        align: 'center',
-                        valign: 'middle'
-                    },
-                    /*{
-                     title: '手机号码',
-                     field: 'mobileTel',
-                     align: 'center',
-                     valign: 'middle',
-                     sortable: true
-                     },*/
-                    {
-                        title: '员工序号',
+                        title: '部门序号',
                         field: 'sortOrder',
                         align: 'center',
-                        valign: 'middle'
+                        valign: 'middle',
+                        sortable: true
                     },
                     {
                         field: 'operate',
@@ -295,12 +248,12 @@
 
         // 批量删除部门
         $remove.click(function () {
-            delStaff();
+            delDepart();
         });
 
         // 新增部门
         $add.click(function () {
-            $('#addStaffModal').modal('show');
+            $('#addDepartModal').modal('show');
         });
 
         // 当调整浏览器窗口的大小时，重置表格尺寸
@@ -324,8 +277,7 @@
         $.each(res.rows, function (i, row) {
             // $.inArray( value,array ) 得到value在array中的index,若没有则返回 -1
             // 此处:根据checked数组将已勾选rows的state赋值true,未勾选则false
-//            row.state = $.inArray(row.id, selections) !== -1;
-            row.depart = row.depart.name;
+            row.state = $.inArray(row.id, selections) !== -1;
         });
         return res;
     }
@@ -342,19 +294,19 @@
     // 操作列按钮
     function operateFormatter(value, row, index) {
         return [
-            '<a class="like" href="javascript:editStaff(\'' + row.id + '\')" title="修改信息">',
+            '<a class="like" href="javascript:editDepart(\'' + row.id + '\')" title="修改信息">',
             '<i class="glyphicon glyphicon-pencil"></i>',
             '</a>&nbsp;&nbsp;',
-            '<a class="remove" href="javascript:delStaff(\'' + row.id + '\')" title="删除人员">',
+            '<a class="remove" href="javascript:delDepart(\'' + row.id + '\')" title="删除部门">',
             '<i class="glyphicon glyphicon-remove"></i>',
             '</a>'
         ].join('');
     }
 
-    // 删除人员
-    function delStaff(id) {
+    // 删除部门
+    function delDepart(id) {
         var ids = id ? id : getIdSelections();
-        $.post("<%=path%>/staff/delStaffByIds.do?ids=" + ids, function (result) {
+        $.post("<%=path%>/depart/delDepartByIds.do?ids=" + ids, function (result) {
             if (result == "success") {
                 $table.bootstrapTable('remove', {
                     field: 'id',
@@ -367,54 +319,36 @@
         }, "json");
     }
 
-    // 编辑人员
-    function editStaff(id) {
-        $.post("<%=path%>/staff/editStaff.do?id=" + id, function (result) {
+    // 编辑部门
+    function editDepart(id) {
+        $.post("<%=path%>/depart/editDepart.do?id=" + id, function (result) {
             if (result.status == "success") {
-                getDepartList();
                 var data = result.data;
                 $("#id").val(data.id);
-                $("#edit_name").val(data.name);
-                $("#edit_sex").val(data.sex);
-                $("#edit_departCode").val(data.depart.code);
-                $("#edit_officeTel").val(data.officeTel);
-                $("#edit_mobileTel").val(data.mobileTel);
-                $("#edit_sortOrder").val(data.sortOrder);
-                $('#editStaffModal').modal('show');
+                $("#code2").val(data.code);
+                $("#name2").val(data.name);
+                $("#business2").val(data.business);
+                $("#sortOrder2").val(data.sortOrder);
+                $('#editDepartModal').modal('show');
             }
         })
     }
 
     // 保存编辑
-    function doEditStaff() {
+    function doEditDepart() {
         var $editform = $("#editform");
         $.post($editform.attr("action"), $editform.serialize(), function (result) {
-            $('#editStaffModal').modal('hide');
+            $('#editDepartModal').modal('hide');
             history.go(0);
         })
     }
 
-    // 新增人员
-    function addStaff() {
+    // 新增部门
+    function addDepart() {
         var $addform = $("#addform");
         $.post($addform.attr("action"), $addform.serialize(), function (result) {
-            $('#addStaffModal').modal('hide');
+            $('#addDepartModal').modal('hide');
             history.go(0);
-        })
-    }
-
-    // 获取部门列表数据
-    function getDepartList() {
-
-        $.post("<%=path%>/depart/getDepartOpts.do", function (result) {
-            if (result.status == "success") {
-                var data = result.data;
-                var html = "<option value='-1'>请选择部门</option>";
-                for (var i = 0; i < data.length; i++) {
-                    html += "<option value='" + data[i].code + "'>" + data[i].name + "</option>";
-                }
-                $departCode.html(html);
-            }
         })
     }
 

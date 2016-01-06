@@ -3,6 +3,7 @@ package com.fk.core.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -73,8 +74,9 @@ public class UserModel {
         this.password = password;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public String getCreateTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(createTime);
     }
 
     public void setCreateTime(Date createTime) {

@@ -236,19 +236,15 @@
                         title: '员工姓名',
                         field: 'name',
                         align: 'center',
-                        valign: 'middle'
+                        valign: 'middle',
+                        sortable: true
                     },
                     {
                         title: '员工性别',
                         field: 'sex',
                         align: 'center',
-                        valign: 'middle'
-                    },
-                    {
-                        title: '所属部门',
-                        field: 'depart',
-                        align: 'center',
-                        valign: 'middle'
+                        valign: 'middle',
+                        sortable: true
                     },
                     {
                         title: '办公电话',
@@ -256,18 +252,19 @@
                         align: 'center',
                         valign: 'middle'
                     },
-                    /*{
-                     title: '手机号码',
-                     field: 'mobileTel',
-                     align: 'center',
-                     valign: 'middle',
-                     sortable: true
-                     },*/
+                    {
+                        title: '手机号码',
+                        field: 'mobileTel',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true
+                    },
                     {
                         title: '员工序号',
                         field: 'sortOrder',
                         align: 'center',
-                        valign: 'middle'
+                        valign: 'middle',
+                        sortable: true
                     },
                     {
                         field: 'operate',
@@ -324,8 +321,7 @@
         $.each(res.rows, function (i, row) {
             // $.inArray( value,array ) 得到value在array中的index,若没有则返回 -1
             // 此处:根据checked数组将已勾选rows的state赋值true,未勾选则false
-//            row.state = $.inArray(row.id, selections) !== -1;
-            row.depart = row.depart.name;
+            row.state = $.inArray(row.id, selections) !== -1;
         });
         return res;
     }

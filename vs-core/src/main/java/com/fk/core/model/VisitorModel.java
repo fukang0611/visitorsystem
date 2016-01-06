@@ -1,7 +1,10 @@
 package com.fk.core.model;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * 访客实体类
@@ -29,6 +32,9 @@ public class VisitorModel {
     @Column(name = "CREATETIME")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime; // 创建时间
+
+    @OneToMany(mappedBy = "visitor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    Set<RecordModel> records = new TreeSet<>(); // 一对多,一个访客对应多次来访记录
 
     public VisitorModel() {
     }
@@ -94,8 +100,9 @@ public class VisitorModel {
         this.tel = tel;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public String getCreateTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(createTime);
     }
 
     public void setCreateTime(Date createTime) {

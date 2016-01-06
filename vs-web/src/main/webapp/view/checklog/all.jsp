@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>访客管理</title>
+    <title>所有来访</title>
     <!-- Bootstrap 样式 -->
     <link href="<%=path%>/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="all">
     <!-- Bootstrap 表格 -->
@@ -21,9 +21,12 @@
         <!-- 主体内容 -->
         <div class="main">
             <!-- 表格工具栏 -->
-            <div id="toolbar">
-                <button id="removeVisitor" class="btn btn-danger" disabled>
-                    <i class="glyphicon glyphicon-remove"></i> 删除访客资料
+            <div id="toolbar" hidden>
+                <button id="addDepart" class="btn btn-info">
+                    <i class="glyphicon glyphicon-plus"></i> 增加
+                </button>
+                <button id="removeDepart" class="btn btn-danger">
+                    <i class="glyphicon glyphicon-remove"></i> 删除
                 </button>
             </div>
             <!-- 表格主体 -->
@@ -40,7 +43,7 @@
                    data-page-list="[10, 25, 50, 100]"
                    data-show-footer="false"
                    data-side-pagination="server"
-                   data-url="<%=path%>/visitor/list.do"
+                   data-url="<%=path%>/record/list.do"
                    data-response-handler="responseHandler">
             </table>
             <!-- 表格主体 结束 -->
@@ -62,7 +65,6 @@
 
     // 表格操作全局变量
     var $table = $('#table');
-    var $remove = $('#removeDepart');
     var selections = [];
 
     // 页面加载完成后执行
@@ -75,49 +77,42 @@
 
         // 表格结构
         $table.bootstrapTable({
-            // 常规属性在html标签中设置
             height: getHeight(),
             columns: [
                 [
                     {
-                        field: 'state',
-                        checkbox: true,
+                        title: '来访日期',
+                        field: 'visitDate',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true
+                    },
+                    {
+                        title: '来访人员',
+                        field: 'visitor',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true
+                    },
+                    {
+                        title: '所办业务',
+                        field: 'business',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true
+                    },
+                    {
+                        title: '办事人员',
+                        field: 'staff',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true
+                    },
+                    {
+                        title: '反馈意见',
+                        field: 'feedback',
                         align: 'center',
                         valign: 'middle'
-                    },
-                    {
-                        title: '身份证号',
-                        field: 'id',
-                        align: 'center',
-                        valign: 'middle',
-                        sortable: true
-                    },
-                    {
-                        title: '姓名',
-                        field: 'name',
-                        align: 'center',
-                        valign: 'middle',
-                        sortable: true
-                    },
-                    {
-                        title: '性别',
-                        field: 'sex',
-                        align: 'center',
-                        valign: 'middle',
-                        sortable: true
-                    },
-                    {
-                        title: '籍贯',
-                        field: 'location',
-                        align: 'center',
-                        valign: 'middle',
-                        sortable: true
-                    },
-                    {
-                        field: 'operate',
-                        title: '操作',
-                        align: 'center',
-                        formatter: operateFormatter
                     }
                 ]
             ]
@@ -131,29 +126,11 @@
              });*/
         });
 
-        // 有勾选数据时删除按钮可用
-        $table.on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function () {
-            $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
-            selections = getIdSelections();
-        });
-
-        // 批量删除
-        $remove.click(function () {
-            delVisitors();
-        });
-
         // 当调整浏览器窗口的大小时，重置表格尺寸
         $(window).resize(function () {
             $table.bootstrapTable('resetView', {
                 height: getHeight()
             });
-        });
-    }
-
-    // 得到勾选ids
-    function getIdSelections() {
-        return $.map($table.bootstrapTable('getSelections'), function (row) {
-            return row.id;
         });
     }
 
@@ -163,7 +140,8 @@
         $.each(res.rows, function (i, row) {
             // $.inArray( value,array ) 得到value在array中的index,若没有则返回 -1
             // 此处:根据checked数组将已勾选rows的state赋值true,未勾选则false
-            row.state = $.inArray(row.id, selections) !== -1;
+            // row.state = $.inArray(row.id, selections) !== -1;
+            row.visitor=row.visitor.name;
         });
         return res;
     }
@@ -175,31 +153,6 @@
             html.push('<p><b>' + key + ':</b> ' + value + '</p>');
         });
         return html.join('');
-    }
-
-    // 操作列按钮
-    function operateFormatter(value, row, index) {
-        return [
-            '<a class="remove" href="javascript:delDepart(\'' + row.id + '\')" title="删除部门">',
-            '<i class="glyphicon glyphicon-remove"></i>',
-            '</a>'
-        ].join('');
-    }
-
-    // 删除部门
-    function delVisitors(id) {
-        var ids = id ? id : getIdSelections();
-        $.post("<%=path%>/visitor/delete.do?ids=" + ids, function (result) {
-            if (result == "success") {
-                $table.bootstrapTable('remove', {
-                    field: 'id',
-                    values: ids
-                });
-                $remove.prop('disabled', true);
-            } else {
-                alert(result);
-            }
-        }, "json");
     }
 
     // 得到高度
