@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+    <title>访客管理</title>
     <!-- Bootstrap 样式 -->
     <link href="<%=path%>/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="all">
     <!-- Bootstrap 表格 -->
@@ -22,11 +22,8 @@
         <div class="main">
             <!-- 表格工具栏 -->
             <div id="toolbar">
-                <button id="addDepart" class="btn btn-info">
-                    <i class="glyphicon glyphicon-plus"></i> 新增部门
-                </button>
-                <button id="removeDepart" class="btn btn-danger" disabled>
-                    <i class="glyphicon glyphicon-remove"></i> 删除部门
+                <button id="removeVisitor" class="btn btn-danger" disabled>
+                    <i class="glyphicon glyphicon-remove"></i> 删除访客资料
                 </button>
             </div>
             <!-- 表格主体 -->
@@ -43,46 +40,10 @@
                    data-page-list="[10, 25, 50, 100]"
                    data-show-footer="false"
                    data-side-pagination="server"
-                   data-url="<%=path%>/depart/departList.do"
+                   data-url="<%=path%>/visitor/list.do"
                    data-response-handler="responseHandler">
             </table>
             <!-- 表格主体 结束 -->
-            <!-- 新增部门模态框 -->
-            <div class="modal fade" id="addDepartModal" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">新增部门信息</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form class="form-horizontal" id="addform" action="<%=path%>/depart/addDepart.do">
-                                <div class="form-group">
-                                    <label for="code" class="col-sm-2 control-label">部门代码</label>
-
-                                    <div class="col-sm-10">
-                                        <input id="code" name="code" type="text" class="form-control"
-                                               placeholder="部门代码">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="name" class="col-sm-2 control-label">部门名称</label>
-
-                                    <div class="col-sm-10">
-                                        <input id="name" name="name" type="text" class="form-control"
-                                               placeholder="部门名称">
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                            <button type="button" class="btn btn-primary" onclick="addDepart();">确认</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 新增部门模态框 结束 -->
         </div>
         <!-- 主体内容 结束 -->
     </div>
@@ -102,7 +63,6 @@
     // 表格操作全局变量
     var $table = $('#table');
     var $remove = $('#removeDepart');
-    var $add = $('#addDepart');
     var selections = [];
 
     // 页面加载完成后执行
@@ -126,15 +86,29 @@
                         valign: 'middle'
                     },
                     {
-                        title: '部门代码',
-                        field: 'code',
+                        title: '身份证号',
+                        field: 'id',
                         align: 'center',
                         valign: 'middle',
                         sortable: true
                     },
                     {
-                        title: '部门名称',
+                        title: '姓名',
                         field: 'name',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true
+                    },
+                    {
+                        title: '性别',
+                        field: 'sex',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true
+                    },
+                    {
+                        title: '籍贯',
+                        field: 'location',
                         align: 'center',
                         valign: 'middle',
                         sortable: true
@@ -163,14 +137,9 @@
             selections = getIdSelections();
         });
 
-        // 批量删除部门
+        // 批量删除
         $remove.click(function () {
-            delDepart();
-        });
-
-        // 新增部门
-        $add.click(function () {
-            $('#addDepartModal').modal('show');
+            delVisitors();
         });
 
         // 当调整浏览器窗口的大小时，重置表格尺寸
@@ -211,9 +180,6 @@
     // 操作列按钮
     function operateFormatter(value, row, index) {
         return [
-            '<a class="like" href="javascript:editDepart(\'' + row.id + '\')" title="修改信息">',
-            '<i class="glyphicon glyphicon-pencil"></i>',
-            '</a>&nbsp;&nbsp;',
             '<a class="remove" href="javascript:delDepart(\'' + row.id + '\')" title="删除部门">',
             '<i class="glyphicon glyphicon-remove"></i>',
             '</a>'
@@ -221,9 +187,9 @@
     }
 
     // 删除部门
-    function delDepart(id) {
+    function delVisitors(id) {
         var ids = id ? id : getIdSelections();
-        $.post("<%=path%>/depart/delDepartByIds.do?ids=" + ids, function (result) {
+        $.post("<%=path%>/visitor/delete.do?ids=" + ids, function (result) {
             if (result == "success") {
                 $table.bootstrapTable('remove', {
                     field: 'id',
@@ -234,22 +200,6 @@
                 alert(result);
             }
         }, "json");
-    }
-
-    // 编辑部门
-    function editDepart(id) {
-        $.post("<%=path%>/depart/editDepart.do?id=" + id, function () {
-
-        })
-    }
-
-    // 新增部门
-    function addDepart() {
-        var $addform = $("#addform");
-        $.post($addform.attr("action"), $addform.serialize(), function (result) {
-            $("#table").refresh();
-            $('#addDepartModal').modal('hide');
-        })
     }
 
     // 得到高度
