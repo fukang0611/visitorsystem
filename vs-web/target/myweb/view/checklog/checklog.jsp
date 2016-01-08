@@ -25,9 +25,9 @@
         <!-- 侧边栏 -->
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar text-center">
-                <li id="depart" class="active"><a href="javascript:changeIframe('all');">所有来访</a></li>
-                <li id="business"><a href="javascript:changeIframe('visit');">来访统计</a></li>
-                <li id="staff"><a href="javascript:changeIframe('feedback');">反馈统计</a></li>
+                <li id="all" class="active"><a href="javascript:changeIframe('all');">所有来访</a></li>
+                <li id="visit"><a href="javascript:changeIframe('visit');">来访统计</a></li>
+                <li id="feedback"><a href="javascript:changeIframe('feedback');">反馈统计</a></li>
             </ul>
         </div>
         <!-- 侧边栏 结束 -->

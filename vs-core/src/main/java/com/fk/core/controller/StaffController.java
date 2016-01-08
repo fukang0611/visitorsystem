@@ -16,6 +16,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+/**
+ * 员工控制器
+ *
+ * @author fukang 2016.01.07
+ */
 @Controller
 @RequestMapping("/staff")
 public class StaffController {
@@ -25,6 +30,12 @@ public class StaffController {
     @Autowired
     IDepartService iDepartService;
 
+    /**
+     * 员工管理表格数据
+     *
+     * @param pager 分页对象
+     * @return 表格数据
+     */
     @RequestMapping("/staffList")
     @ResponseBody
     public Object staffList(Pager pager) {
@@ -36,6 +47,13 @@ public class StaffController {
         return data;
     }
 
+    /**
+     * 新增员工
+     *
+     * @param record     员工信息
+     * @param departCode 部门代码
+     * @return 操作结果
+     */
     @RequestMapping("/addStaff")
     @ResponseBody
     public Object addStaff(StaffModel record, String departCode) {
@@ -52,6 +70,13 @@ public class StaffController {
         return "success";
     }
 
+    /**
+     * 保存员工修改
+     *
+     * @param record     修改后的员工信息
+     * @param departCode 部门代码
+     * @return
+     */
     @RequestMapping("/doEditStaff")
     @ResponseBody
     public Object doEditStaff(StaffModel record, String departCode) {
@@ -62,7 +87,12 @@ public class StaffController {
         return result ? "success" : "fail";
     }
 
-
+    /**
+     * 删除员工
+     *
+     * @param ids 员工id
+     * @return 操作结果
+     */
     @RequestMapping("/delStaffByIds")
     @ResponseBody
     public Object delStaffByIds(String ids) {
@@ -74,6 +104,12 @@ public class StaffController {
         return "success";
     }
 
+    /**
+     * 修改员工页面跳转
+     *
+     * @param id 员工id
+     * @return 操作结果
+     */
     @RequestMapping("/editStaff")
     @ResponseBody
     public Object editStaff(String id) {

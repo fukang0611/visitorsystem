@@ -3,5 +3,6 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../vs-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../vs-web/src/main/webapp/libs/js/Chart.min.js" charset="GBK" />
   </component>
 </project>

@@ -7,357 +7,170 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
     <!-- Bootstrap 样式 -->
     <link href="<%=path%>/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="all">
-    <!-- Bootstrap 表格 -->
-    <link rel="stylesheet" href="<%=path%>/libs/bootstrap/css/bootstrap-table.min.css">
+    <title>访客统计图</title>
 </head>
 <body>
+<br/><br/><br/><br/>
 <!-- 页面主体 -->
 <div class="container-fluid">
-    <!-- 页面主体栅格布局 -->
     <div class="row">
-        <!-- 主体内容 -->
-        <div class="main">
-            <!-- 表格工具栏 -->
-            <div id="toolbar">
-                <button id="addDepart" class="btn btn-info">
-                    <i class="glyphicon glyphicon-plus"></i> 新增部门
-                </button>
-                <button id="removeDepart" class="btn btn-danger" disabled>
-                    <i class="glyphicon glyphicon-remove"></i> 删除部门
-                </button>
-            </div>
-            <!-- 表格主体 -->
-            <table id="table"
-                   data-toolbar="#toolbar"
-                   data-search="true"
-                   data-show-refresh="true"
-                   data-show-toggle="true"
-                   data-show-columns="true"
-                   data-detail-view="true"
-                   data-detail-formatter="detailFormatter"
-                   data-pagination="true"
-                   data-id-field="id"
-                   data-page-list="[10, 25, 50, 100]"
-                   data-show-footer="false"
-                   data-side-pagination="server"
-                   data-url="<%=path%>/depart/departList.do"
-                   data-response-handler="responseHandler">
-            </table>
-            <!-- 表格主体 结束 -->
-            <!-- 新增部门模态框 -->
-            <div class="modal fade" id="addDepartModal" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">新增部门信息</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form class="form-horizontal" id="addform" action="<%=path%>/depart/addDepart.do">
-                                <div class="form-group">
-                                    <label for="code" class="col-sm-2 control-label">部门代码</label>
-
-                                    <div class="col-sm-10">
-                                        <input id="code" name="code" type="text" class="form-control"
-                                               placeholder="部门代码">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="name" class="col-sm-2 control-label">部门名称</label>
-
-                                    <div class="col-sm-10">
-                                        <input id="name" name="name" type="text" class="form-control"
-                                               placeholder="部门名称">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="business" class="col-sm-2 control-label">部门业务</label>
-
-                                    <div class="col-sm-10">
-                                        <input id="business" name="business" type="text" class="form-control"
-                                               placeholder="部门业务">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="sortOrder" class="col-sm-2 control-label">部门序号</label>
-
-                                    <div class="col-sm-10">
-                                        <input id="sortOrder" name="sortOrder" type="text" class="form-control"
-                                               placeholder="部门序号">
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                            <button type="button" class="btn btn-primary" onclick="addDepart();">确认</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 新增部门模态框 结束 -->
-            <!-- 修改部门模态框 -->
-            <div class="modal fade" id="editDepartModal" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                            <h4 class="modal-title" id="editModalLabel">编辑部门信息</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form class="form-horizontal" id="editform" action="<%=path%>/depart/doEditDepart.do">
-                                <input id="id" name="id" type="hidden"/>
-
-                                <div class="form-group">
-                                    <label for="code" class="col-sm-2 control-label">部门代码</label>
-
-                                    <div class="col-sm-10">
-                                        <input id="code2" name="code" type="text" class="form-control"
-                                               placeholder="部门代码">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="name" class="col-sm-2 control-label">部门名称</label>
-
-                                    <div class="col-sm-10">
-                                        <input id="name2" name="name" type="text" class="form-control"
-                                               placeholder="部门名称">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="business" class="col-sm-2 control-label">部门业务</label>
-
-                                    <div class="col-sm-10">
-                                        <input id="business2" name="business" type="text" class="form-control"
-                                               placeholder="部门业务">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="sortOrder" class="col-sm-2 control-label">部门序号</label>
-
-                                    <div class="col-sm-10">
-                                        <input id="sortOrder2" name="sortOrder" type="text" class="form-control"
-                                               placeholder="部门序号">
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                            <button type="button" class="btn btn-primary" onclick="doEditDepart();">确认</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 新增部门模态框 结束 -->
+        <div class="col-sm-4 col-sm-offset-1">
+            <canvas id="canvas1"></canvas>
         </div>
-        <!-- 主体内容 结束 -->
+        <div class="col-sm-4 col-sm-offset-1">
+            <canvas id="canvas2"></canvas>
+        </div>
     </div>
-    <!-- 页面主体栅格布局 结束 -->
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-1">
+            <canvas id="canvas3"></canvas>
+        </div>
+        <div class="col-sm-4 col-sm-offset-1">
+            <canvas id="canvas4"></canvas>
+        </div>
+    </div>
 </div>
 <!-- 页面主体 结束 -->
 <!-- jquery core -->
 <script src="<%=path%>/libs/jquery/jquery-1.11.3.min.js"></script>
 <!-- Bootstrap core -->
 <script src="<%=path%>/libs/bootstrap/js/bootstrap.min.js"></script>
-<!-- Bootstrap 表格 -->
-<script src="<%=path%>/libs/bootstrap/js/bootstrap-table.min.js"></script>
-<script src="<%=path%>/libs/bootstrap/js/bootstrap-table-zh-CN.min.js"></script>
+<!-- Chart -->
+<script src="<%=path%>/libs/js/Chart.min.js"></script>
 <!-- javascript functions -->
 <script type="text/javascript">
 
-    // 表格操作全局变量
-    var $table = $('#table');
-    var $remove = $('#removeDepart');
-    var $add = $('#addDepart');
-    var selections = [];
+    // 产生随机数
+    var randomScalingFactor = function () {
+        return Math.round(Math.random() * 100)
+    };
 
-    // 页面加载完成后执行
-    $(function () {
-        initTable(); // 初始化表格
-    });
-
-    // 初始化表格
-    function initTable() {
-
-        // 表格结构
-        $table.bootstrapTable({
-            // 常规属性在html标签中设置
-            height: getHeight(),
-            columns: [
-                [
-                    {
-                        field: 'state',
-                        checkbox: true,
-                        align: 'center',
-                        valign: 'middle'
-                    },
-                    {
-                        title: '部门代码',
-                        field: 'code',
-                        align: 'center',
-                        valign: 'middle',
-                        sortable: true
-                    },
-                    {
-                        title: '部门名称',
-                        field: 'name',
-                        align: 'center',
-                        valign: 'middle',
-                        sortable: true
-                    },
-                    {
-                        title: '部门业务',
-                        field: 'business',
-                        align: 'center',
-                        valign: 'middle'
-                    },
-                    {
-                        title: '部门序号',
-                        field: 'sortOrder',
-                        align: 'center',
-                        valign: 'middle',
-                        sortable: true
-                    },
-                    {
-                        field: 'operate',
-                        title: '操作',
-                        align: 'center',
-                        formatter: operateFormatter
-                    }
-                ]
-            ]
-        });
-
-        // 展开详情
-        $table.on('expand-row.bs.table', function (e, index, row, $detail) {
-            // 可以异步获取详情,默认会加载当前行数据所有字段
-            /* $.get('url', function (res) {
-             $detail.html(res.replace(/\n/g, '<br>'));
-             });*/
-        });
-
-        // 有勾选数据时删除按钮可用
-        $table.on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function () {
-            $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
-            selections = getIdSelections();
-        });
-
-        // 批量删除部门
-        $remove.click(function () {
-            delDepart();
-        });
-
-        // 新增部门
-        $add.click(function () {
-            $('#addDepartModal').modal('show');
-        });
-
-        // 当调整浏览器窗口的大小时，重置表格尺寸
-        $(window).resize(function () {
-            $table.bootstrapTable('resetView', {
-                height: getHeight()
-            });
-        });
-    }
-
-    // 得到勾选ids
-    function getIdSelections() {
-        return $.map($table.bootstrapTable('getSelections'), function (row) {
-            return row.id;
-        });
-    }
-
-    // 服务器响应处理
-    function responseHandler(res) {
-        // 遍历返回数据的rows
-        $.each(res.rows, function (i, row) {
-            // $.inArray( value,array ) 得到value在array中的index,若没有则返回 -1
-            // 此处:根据checked数组将已勾选rows的state赋值true,未勾选则false
-            row.state = $.inArray(row.id, selections) !== -1;
-        });
-        return res;
-    }
-
-    // 展开详情
-    function detailFormatter(index, row) {
-        var html = [];
-        $.each(row, function (key, value) {
-            html.push('<p><b>' + key + ':</b> ' + value + '</p>');
-        });
-        return html.join('');
-    }
-
-    // 操作列按钮
-    function operateFormatter(value, row, index) {
-        return [
-            '<a class="like" href="javascript:editDepart(\'' + row.id + '\')" title="修改信息">',
-            '<i class="glyphicon glyphicon-pencil"></i>',
-            '</a>&nbsp;&nbsp;',
-            '<a class="remove" href="javascript:delDepart(\'' + row.id + '\')" title="删除部门">',
-            '<i class="glyphicon glyphicon-remove"></i>',
-            '</a>'
-        ].join('');
-    }
-
-    // 删除部门
-    function delDepart(id) {
-        var ids = id ? id : getIdSelections();
-        $.post("<%=path%>/depart/delDepartByIds.do?ids=" + ids, function (result) {
-            if (result == "success") {
-                $table.bootstrapTable('remove', {
-                    field: 'id',
-                    values: ids
-                });
-                $remove.prop('disabled', true);
-            } else {
-                alert(result);
+    // 线形数据
+    var lineChartData = {
+        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        datasets: [
+            {
+                label: "My First dataset",
+                fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "rgba(220,220,220,1)",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
+            },
+            {
+                label: "My Second dataset",
+                fillColor: "rgba(151,187,205,0.2)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(151,187,205,1)",
+                data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
             }
-        }, "json");
-    }
+        ]
 
-    // 编辑部门
-    function editDepart(id) {
-        $.post("<%=path%>/depart/editDepart.do?id=" + id, function (result) {
-            if (result.status == "success") {
-                var data = result.data;
-                $("#id").val(data.id);
-                $("#code2").val(data.code);
-                $("#name2").val(data.name);
-                $("#business2").val(data.business);
-                $("#sortOrder2").val(data.sortOrder);
-                $('#editDepartModal').modal('show');
+    };
+    // 饼型数据
+    var pieData = [
+        {
+            value: 300,
+            color: "#F7464A",
+            highlight: "#FF5A5E",
+            label: "Red"
+        },
+        {
+            value: 50,
+            color: "#46BFBD",
+            highlight: "#5AD3D1",
+            label: "Green"
+        },
+        {
+            value: 100,
+            color: "#FDB45C",
+            highlight: "#FFC870",
+            label: "Yellow"
+        },
+        {
+            value: 40,
+            color: "#949FB1",
+            highlight: "#A8B3C5",
+            label: "Grey"
+        },
+        {
+            value: 120,
+            color: "#4D5360",
+            highlight: "#616774",
+            label: "Dark Grey"
+        }
+
+    ];
+    // 网型数据
+    var radarChartData = {
+        labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
+        datasets: [
+            {
+                label: "My First dataset",
+                fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "rgba(220,220,220,1)",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: [65, 59, 90, 81, 56, 55, 40]
+            },
+            {
+                label: "My Second dataset",
+                fillColor: "rgba(151,187,205,0.2)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(151,187,205,1)",
+                data: [28, 48, 40, 19, 96, 27, 100]
             }
-        })
-    }
+        ]
+    };
+    // 条形数据
+    var barChartData = {
+        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        datasets: [
+            {
+                fillColor: "rgba(220,220,220,0.5)",
+                strokeColor: "rgba(220,220,220,0.8)",
+                highlightFill: "rgba(220,220,220,0.75)",
+                highlightStroke: "rgba(220,220,220,1)",
+                data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
+            },
+            {
+                fillColor: "rgba(151,187,205,0.5)",
+                strokeColor: "rgba(151,187,205,0.8)",
+                highlightFill: "rgba(151,187,205,0.75)",
+                highlightStroke: "rgba(151,187,205,1)",
+                data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
+            }
+        ]
 
-    // 保存编辑
-    function doEditDepart() {
-        var $editform = $("#editform");
-        $.post($editform.attr("action"), $editform.serialize(), function (result) {
-            $('#editDepartModal').modal('hide');
-            history.go(0);
-        })
-    }
+    };
 
-    // 新增部门
-    function addDepart() {
-        var $addform = $("#addform");
-        $.post($addform.attr("action"), $addform.serialize(), function (result) {
-            $('#addDepartModal').modal('hide');
-            history.go(0);
-        })
-    }
+    window.onload = function () {
+        window.myLine = new Chart(document.getElementById("canvas1").getContext("2d")).Line(lineChartData, {
+            responsive: true
+        });
+        window.myBar = new Chart(document.getElementById("canvas2").getContext("2d")).Bar(barChartData, {
+            responsive: true
+        });
+        window.myRadar = new Chart(document.getElementById("canvas3").getContext("2d")).Radar(radarChartData, {
+            responsive: true
+        });
+        window.myPie = new Chart(document.getElementById("canvas4").getContext("2d")).Pie(pieData, {
+            responsive: true
+        });
 
-    // 得到高度
-    function getHeight() {
-//        return $(window).height() - $('h1').outerHeight(true);
-        return $(window).height();
     }
-
 </script>
 </body>
 </html>

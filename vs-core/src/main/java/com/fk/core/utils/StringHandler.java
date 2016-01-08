@@ -2,6 +2,7 @@ package com.fk.core.utils;
 
 /**
  * 工具类--字符串处理器
+ * @author fukang 2016.01.07
  */
 public class StringHandler {
 

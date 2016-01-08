@@ -16,7 +16,7 @@
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="objectMapper">
-                    <bean class="com.fk.vs.web.HibernateAwareObjectMapper"/>
+                    <bean class="com.fk.web.HibernateAwareObjectMapper"/>
                 </property>
             </bean>
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">
@@ -44,5 +44,15 @@
         <property name="prefix" value="/view/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+
+    <mvc:interceptors>
+        <!-- 配置此处则拦截所有请求 -->
+        <!--<bean class="com.fk.web.CommonInterceptor"/>-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/user/loginValidate.do"/>
+            <bean class="com.fk.web.CommonInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
 </beans>

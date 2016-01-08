@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
+/**
+ * 用户管理控制器
+ */
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -16,6 +19,14 @@ public class UserController {
     @Autowired
     IUserService iUserService;
 
+    /**
+     * 用户登陆验证
+     *
+     * @param username 用户名
+     * @param password 密码
+     * @param session  session会话
+     * @return 验证结果
+     */
     @RequestMapping("/loginValidate")
     @ResponseBody
     public Object loginValidate(String username, String password, HttpSession session) {
@@ -32,4 +43,9 @@ public class UserController {
         return "fail";
     }
 
+    @RequestMapping("/toLoginPage")
+    public String toLoginPage(HttpSession session) {
+        session.removeAttribute("user");
+        return "login";
+    }
 }

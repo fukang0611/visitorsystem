@@ -1,4 +1,4 @@
-package com.fk.vs.web;
+package com.fk.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;

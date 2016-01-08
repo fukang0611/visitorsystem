@@ -1,7 +1,6 @@
 package com.fk.core.controller;
 
 
-import com.fk.core.dao.IStaffDao;
 import com.fk.core.model.RecordModel;
 import com.fk.core.model.StaffModel;
 import com.fk.core.model.VisitorModel;
@@ -19,6 +18,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 访客记录控制器
+ *
+ * @author fukang 2016.01.06
+ */
 @Controller
 @RequestMapping("/record")
 public class RecordController {
@@ -30,6 +34,12 @@ public class RecordController {
     @Autowired
     private IStaffService iStaffService;
 
+    /**
+     * 访客记录表格数据
+     *
+     * @param pager 分页对象
+     * @return 表格数据
+     */
     @RequestMapping("/list")
     @ResponseBody
     private Object list(Pager pager) {
@@ -41,25 +51,32 @@ public class RecordController {
         return data;
     }
 
+    /**
+     * 新增访客记录
+     *
+     * @param visitor 访客对象
+     * @param staffID 办事人员ID
+     * @return 操作记录
+     */
     @RequestMapping("/add")
     @ResponseBody
     private Object add(VisitorModel visitor, String staffID) {
 
+        // 若该访客数据不存在(首次来访),则增加访客对象
         if (iVisitorService.getVisitorByID(visitor.getId()) == null) {
             visitor.setCreateTime(new Date());
             iVisitorService.addVisitor(visitor);
         } else {
             visitor = iVisitorService.getVisitorByID(visitor.getId());
         }
-
-        StaffModel staff = iStaffService.getStaffByID(staffID);
+        StaffModel staff = iStaffService.getStaffByID(staffID); // 获取员工对象
+        // 实例化访客记录对象并插入数据
         RecordModel record = new RecordModel();
         record.setVisitDate(new Date());
         record.setVisitor(visitor);
         record.setStaff(staff.getName());
         record.setBusiness(staff.getDepart().getBusiness());
         boolean result = iRecordService.addRecord(record);
-
         return result ? "success" : "fail";
     }
 

@@ -3,6 +3,8 @@ package com.fk.core.utils;
 /**
  * 工具类--表格分页对象
  * 基于 bootstrap-table 插件使用
+ *
+ * @author fukang 2016.01.07
  */
 public class Pager {
 

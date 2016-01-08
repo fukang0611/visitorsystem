@@ -1,10 +1,8 @@
 package com.fk.core.controller;
 
-import com.fk.core.dao.IVisitorDao;
 import com.fk.core.model.VisitorModel;
 import com.fk.core.service.IVisitorService;
 import com.fk.core.utils.Pager;
-import com.sun.tools.internal.ws.processor.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +13,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 访客管理控制器
+ *
+ * @author fukang 2016.01.07
+ */
 @Controller
 @RequestMapping("/visitor")
 public class VisitorController {
@@ -22,10 +25,17 @@ public class VisitorController {
     @Autowired
     IVisitorService iVisitorService;
 
+    /**
+     * 身份证扫描
+     *
+     * @param visitor 访客信息
+     * @return 操作结果
+     */
     @RequestMapping("/scanInfo")
     @ResponseBody
     public Object scanInfo(VisitorModel visitor) {
 
+        // 若该访客首次来访,则增加访客信息
         if (iVisitorService.getVisitorByID(visitor.getId()) == null) {
             visitor.setCreateTime(new Date());
             iVisitorService.addVisitor(visitor);
@@ -39,6 +49,12 @@ public class VisitorController {
         return result;
     }
 
+    /**
+     * 访客管理表格数据
+     *
+     * @param pager 分页对象
+     * @return 访客数据
+     */
     @RequestMapping("/list")
     @ResponseBody
     public Object list(Pager pager) {
@@ -50,6 +66,12 @@ public class VisitorController {
         return data;
     }
 
+    /**
+     * 删除访客
+     *
+     * @param ids 访客id
+     * @return 操作结果
+     */
     @RequestMapping("/delete")
     @ResponseBody
     public Object delete(String ids) {
