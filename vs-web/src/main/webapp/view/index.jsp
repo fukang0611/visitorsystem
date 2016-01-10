@@ -26,25 +26,13 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="javascript:switchFunc('checkin');">访客管理系统</a>
+            <span class="icon-bar"></span>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li id="checkin" class="active"><a href="javascript:switchFunc('checkin');">访客登记</a></li>
                 <li id="checklog"><a href="javascript:switchFunc('checklog');">来访记录</a></li>
                 <li id="infomanage"><a href="javascript:switchFunc('infomanage');">信息维护</a></li>
-                <%--<li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">Dropdown <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li class="dropdown-header">Nav header</li>
-                        <li><a href="#">Separated link</a></li>
-                        <li><a href="#">One more separated link</a></li>
-                    </ul>
-                </li>--%>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">当前用户 : ${user.displayName}</a></li>
