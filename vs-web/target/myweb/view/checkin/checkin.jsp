@@ -32,7 +32,7 @@
         <!-- 侧边栏 结束 -->
         <!-- iframe内容区域 -->
         <div class="col-md-9 col-md-offset-2 main">
-            <iframe id="iframe" src="<%=path%>/view/checkin/scancard.jsp" scrolling="no"
+            <iframe id="iframe" src="<%=path%>/view/checkin/reader/readcard.jsp" scrolling="no"
                     frameborder="0" height="528px" width="100%"></iframe>
         </div>
         <!-- iframe内容区域 结束 -->
@@ -54,7 +54,7 @@
             case "scancard":
                 $("#scancard").addClass("active");
                 $("#manualcheck,#todayvisit,#todayfeedback").removeClass("active");
-                $iframe.attr("src", "<%=path%>/view/checkin/scancard.jsp");
+                $iframe.attr("src", "<%=path%>/view/checkin/reader/readcard.jsp");
                 break;
             case "manualcheck":
                 $("#manualcheck").addClass("active");
@@ -64,7 +64,7 @@
             case "todayvisit":
                 $("#todayvisit").addClass("active");
                 $("#scancard,#manualcheck,#todayfeedback").removeClass("active");
-                $iframe.attr("src", "<%=path%>/view/checkin/todayvisit.jsp");
+                $iframe.attr("src", "<%=path%>/view/checkin/reader/todayvisit.html");
                 break;
             case "todayfeedback":
                 $("#todayfeedback").addClass("active");

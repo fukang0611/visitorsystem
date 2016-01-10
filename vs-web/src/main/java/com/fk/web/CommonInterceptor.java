@@ -20,7 +20,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         log.info("进入interceptor拦截器");
-        UserModel user = (UserModel) request.getSession().getAttribute("user");
+        /*UserModel user = (UserModel) request.getSession().getAttribute("user");
         if (user == null) {
             log.info("interceptor:尚未登陆,跳转至登陆页面!");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -28,6 +28,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
             return false;
         } else {
             return true;
-        }
+        }*/
+        return true;
     }
 }

@@ -25,30 +25,20 @@
             <h2 class="sub-header">手动录入访客信息</h2><br/>
 
             <div class="form-group">
-                <div class="col-sm-5">
-                    <label for="name">姓名:</label>
-                    <input type="text" class="form-control" name="name" id="name" placeholder="访客姓名">
+
+                <div class="col-sm-10">
+                    <label for="name">姓名</label>
+                    <input name="name" id="name" class="form-control"/>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-5">
-                    <label for="sex">性别:</label>
-                    <input type="text" class="form-control" name="sex" id="sex" placeholder="性别">
+                <div class="col-sm-10">
+                    <label for="name">联系电话</label>
+                    <input name="name" id="name" class="form-control"/>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-5">
-                    <label for="tel">联系电话:</label>
-                    <input type="text" class="form-control" name="tel" id="tel" placeholder="联系电话">
+                <div class="col-sm-10">
+                    <label for="name">姓名</label>
+                    <input name="name" id="name" class="form-control"/>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-5">
-                    <label for="comment">备注事项:</label>
-                    <input type="text" class="form-control" name="comment" id="comment" placeholder="备注事项">
-                </div>
-            </div>
-            <div class="form-group">
+
                 <div class="col-sm-3">
                     <select name="business" id="business" class="form-control" onchange="getStaffOpts();">
                         <option value="-1">选择办事业务</option>
@@ -150,6 +140,10 @@
     function getStaffOpts() {
 
         var code = $business.val();
+        if (code == -1) {
+            $staff.html('<option value="-1">选择办事人员</option>');
+            return;
+        }
         $.post("<%=path%>/depart/getStaffOpts.do?code=" + code, function (result) {
             if (result.status == "success") {
                 var data = result.data;

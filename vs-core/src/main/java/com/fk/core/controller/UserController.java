@@ -44,8 +44,9 @@ public class UserController {
     }
 
     @RequestMapping("/toLoginPage")
+    @ResponseBody
     public String toLoginPage(HttpSession session) {
         session.removeAttribute("user");
-        return "login";
+        return "success";
     }
 }

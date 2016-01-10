@@ -32,7 +32,7 @@
                 <li id="checkin" class="active"><a href="javascript:switchFunc('checkin');">访客登记</a></li>
                 <li id="checklog"><a href="javascript:switchFunc('checklog');">来访记录</a></li>
                 <li id="infomanage"><a href="javascript:switchFunc('infomanage');">信息维护</a></li>
-                <li class="dropdown">
+                <%--<li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">Dropdown <span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -44,11 +44,11 @@
                         <li><a href="#">Separated link</a></li>
                         <li><a href="#">One more separated link</a></li>
                     </ul>
-                </li>
+                </li>--%>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">当前用户 : ${user.displayName}</a></li>
-                <li><a href="#">用户登出</a></li>
+                <li><a href="javascript:logout();">用户登出</a></li>
             </ul>
         </div>
     </div>
@@ -89,6 +89,14 @@
                 $("#icontent").attr("src", "<%=path%>/view/infomanage/infomanage.jsp");
                 break;
         }
+    }
+
+    function logout() {
+        $.get("<%=path%>/user/toLoginPage.do", function (result) {
+            if (result == "success") {
+                window.parent.location.href = "<%=path%>/view/login.jsp";
+            }
+        });
     }
 </script>
 </body>
