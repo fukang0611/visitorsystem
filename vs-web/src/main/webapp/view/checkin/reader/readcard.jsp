@@ -27,27 +27,27 @@
             <h2 class="sub-header">访客信息扫描</h2><br/>
 
             <div class="row">
-                <div class="col-sm-5">
+                <div class="col-sm-8">
                     <table class="table table-hover table-bordered">
                         <tr>
-                            <th>姓&nbsp;&nbsp;名:</th>
+                            <th class="text-center">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名:</th>
                             <td id="name"></td>
                         </tr>
                         <tr>
-                            <th>性&nbsp;&nbsp;别:</th>
+                            <th class="text-center">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:</th>
                             <td id="sex"></td>
                         </tr>
                         <tr>
-                            <th>籍&nbsp;&nbsp;贯:</th>
-                            <td id="location"></td>
+                            <th class="text-center">证件号码:</th>
+                            <td id="id"></td>
                         </tr>
                         <tr>
-                            <th>证件号码:</th>
-                            <td id="id"></td>
+                            <th class="text-center">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址:</th>
+                            <td id="location">河南省郑州市二七区陇海路2号三单元4楼</td>
                         </tr>
                     </table>
                 </div>
-                <div class="col-sm-2 col-sm-offset-1">
+                <div class="col-sm-2">
                     <img class="img-rounded pull-right" style="max-height: 150px;"
                          src="<%=path%>/img/photo.jpg">
                 </div>
@@ -99,8 +99,8 @@
                         <tr>
                             <th class="text-center">证件号码</th>
                             <td id="print_id"></td>
-                            <th class="text-center">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址</th>
-                            <td id="print_location"></td>
+                            <th class="text-center">来访时间</th>
+                            <td id="print_time"></td>
                         </tr>
                         <tr>
                             <th class="text-center">待办业务</th>
@@ -115,8 +115,8 @@
                             <td id="print_officeTel"></td>
                         </tr>
                         <tr>
-                            <th class="text-center">来访时间</th>
-                            <td colspan="3" id="print_time"></td>
+                            <th class="text-center">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址</th>
+                            <td colspan="3" id="print_location"></td>
                         </tr>
                     </table>
                 </div>

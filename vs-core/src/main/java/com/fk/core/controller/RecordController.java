@@ -48,6 +48,7 @@ public class RecordController {
         Map<String, Object> data = new HashMap<>();
         data.put("total", pager.getTotalRows()); // 数据总数
         data.put("rows", records); // 列表数据
+
         return data;
     }
 
@@ -71,12 +72,13 @@ public class RecordController {
         }
         // 实例化访客记录对象并插入数据
         RecordModel record = new RecordModel();
+        StaffModel staff = iStaffService.getStaffByID(staffID); // 员工
         record.setVisitDate(new Date());
         record.setVisitor(visitor);
-        StaffModel staff = iStaffService.getStaffByID(staffID);
         record.setStaff(staff.getName());
         record.setBusiness(staff.getDepart().getBusiness());
         boolean result = iRecordService.addRecord(record);
+
         return result ? "success" : "failure";
     }
 
