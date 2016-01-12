@@ -89,7 +89,7 @@
                     <h4 class="modal-title" id="printModalLabel">访客信息打印预览</h4>
                 </div>
                 <div class="modal-body">
-                    <table class="table table-bordered table-hover">
+                    <table id="print_area" class="table table-bordered table-hover">
                         <tr>
                             <th class="text-center" width="15%">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</th>
                             <td id="print_name" width="35%"></td>
@@ -132,6 +132,8 @@
 <!-- 页面主体 结束 -->
 <!-- jquery core -->
 <script src="<%=path%>/libs/jquery/jquery-1.11.3.min.js"></script>
+<!-- jquery print-->
+<script src="<%=path%>/libs/jquery/jquery.jqprint-0.3.js"></script>
 <!-- Bootstrap core -->
 <script src="<%=path%>/libs/bootstrap/js/bootstrap.min.js"></script>
 <!-- Bootstrap 表单验证 -->
@@ -249,6 +251,8 @@
         var staff = $("#print_staff").html();
         var officeTel = $("#print_officeTel").html();
         var printTime = $("#print_time").html();
+
+        $("#print_area").jqprint({operaSupport: false});
 
         // 增加来访记录
         $.post("<%=path%>/record/add.do", {
