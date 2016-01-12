@@ -17,7 +17,11 @@
 </head>
 <body>
 <OBJECT classid="clsid:10946843-7507-44FE-ACE8-2B3483D179B7"
-        id="CVR_IDCard" name="CVR_IDCard" width="0" height="0"></OBJECT>
+        id="CVR_IDCard" name="CVR_IDCard" width="0" height="0">
+</OBJECT>
+<OBJECT classid="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2"
+        id="WebBrowser" name="WebBrowser" width=0 height=0>
+</OBJECT>
 <!-- 页面主体 -->
 <div class="container-fluid">
     <!-- 页面主体栅格布局 -->
@@ -89,34 +93,34 @@
                     <h4 class="modal-title" id="printModalLabel">访客信息打印预览</h4>
                 </div>
                 <div class="modal-body">
-                    <table id="print_area" class="table table-bordered table-hover">
+                    <table id="preview_area" class="table table-bordered table-hover">
                         <tr>
                             <th class="text-center" width="15%">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</th>
-                            <td id="print_name" width="35%"></td>
+                            <td id="preview_name" width="35%"></td>
                             <th class="text-center" width="15%">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</th>
-                            <td id="print_sex" width="35%"></td>
+                            <td id="preview_sex" width="35%"></td>
                         </tr>
                         <tr>
                             <th class="text-center">证件号码</th>
-                            <td id="print_id"></td>
+                            <td id="preview_id"></td>
                             <th class="text-center">来访时间</th>
-                            <td id="print_time"></td>
+                            <td id="preview_time"></td>
                         </tr>
                         <tr>
                             <th class="text-center">待办业务</th>
-                            <td id="print_business"></td>
+                            <td id="preview_business"></td>
                             <th class="text-center">办事部门</th>
-                            <td id="print_depart"></td>
+                            <td id="preview_depart"></td>
                         </tr>
                         <tr>
                             <th class="text-center">办事人员</th>
-                            <td id="print_staff"></td>
+                            <td id="preview_staff"></td>
                             <th class="text-center">办公电话</th>
-                            <td id="print_officeTel"></td>
+                            <td id="preview_officeTel"></td>
                         </tr>
                         <tr>
                             <th class="text-center">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址</th>
-                            <td colspan="3" id="print_location"></td>
+                            <td colspan="3" id="preview_location"></td>
                         </tr>
                     </table>
                 </div>
@@ -127,7 +131,47 @@
             </div>
         </div>
     </div>
-    <!-- 修改员工模态框 结束 -->
+    <!-- 打印预览模态框 结束 -->
+    <!-- 打印区域 -->
+    <table id="print_area" class="table table-hover hidden" style="border-style: none">
+        <tr>
+            <th class="text-center" width="15%">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</th>
+            <td id="print_name" width="35%"></td>
+        </tr>
+        <tr>
+            <th class="text-center">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</th>
+            <td id="print_sex"></td>
+        </tr>
+        <tr>
+            <th class="text-center">证件号码</th>
+            <td id="print_id"></td>
+        </tr>
+        <tr>
+            <th class="text-center">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址</th>
+            <td id="print_location"></td>
+        </tr>
+        <tr>
+            <th class="text-center">来访时间</th>
+            <td id="print_time"></td>
+        </tr>
+        <tr>
+            <th class="text-center">待办业务</th>
+            <td id="print_business"></td>
+        </tr>
+        <tr>
+            <th class="text-center">办事部门</th>
+            <td id="print_depart"></td>
+        </tr>
+        <tr>
+            <th class="text-center">办事人员</th>
+            <td id="print_staff"></td>
+        </tr>
+        <tr>
+            <th class="text-center">办公电话</th>
+            <td id="print_officeTel"></td>
+        </tr>
+    </table>
+    <!-- 打印区域 结束 -->
 </div>
 <!-- 页面主体 结束 -->
 <!-- jquery core -->
@@ -215,17 +259,17 @@
     function prePrint() {
 
         // 访客信息
-        $("#print_name").html($("#name").html());
-        $("#print_sex").html($("#sex").html());
-        $("#print_id").html($("#id").html());
-        $("#print_location").html($("#location").html());
+        $("#print_name,#preview_name").html($("#name").html());
+        $("#print_sex,#preview_sex").html($("#sex").html());
+        $("#print_id,#preview_id").html($("#id").html());
+        $("#print_location,#preview_location").html($("#location").html());
         // 业务信息
-        $("#print_business").html($business.find("option:selected").text().substring(0, 2));
-        $("#print_depart").html($business.find("option:selected").text().substring(6));
+        $("#print_business,#preview_business").html($business.find("option:selected").text().substring(0, 2));
+        $("#print_depart,#preview_depart").html($business.find("option:selected").text().substring(6));
         // 办事人员信息
         var staff_select = $staff.find("option:selected").text();
-        $("#print_staff").html(staff_select.substring(0, 3));
-        $("#print_officeTel").html($staff.find("option:selected").text().substring(staff_select.indexOf("(") + 1, staff_select.indexOf(")")));
+        $("#print_staff,#preview_staff").html(staff_select.substring(0, 3));
+        $("#print_officeTel,#preview_officeTel").html($staff.find("option:selected").text().substring(staff_select.indexOf("(") + 1, staff_select.indexOf(")")));
         // 日期信息
         var d = new Date();
         var datetime = (d.getFullYear() + "-" +
@@ -233,7 +277,7 @@
         ("0" + d.getDate()).slice(-2) + " " +
         ("0" + d.getHours()).slice(-2) + ":" +
         ("0" + d.getMinutes()).slice(-2));
-        $("#print_time").html(datetime);
+        $("#print_time,#preview_time").html(datetime);
         // 显示模态框
         $('#printModal').modal('show');
     }
@@ -252,7 +296,11 @@
         var officeTel = $("#print_officeTel").html();
         var printTime = $("#print_time").html();
 
+        // jqprint 插件打印
+        pagesetup_null();
+        $("#print_area").removeClass('hidden');
         $("#print_area").jqprint({operaSupport: false});
+        $("#print_area").addClass('hidden');
 
         // 增加来访记录
         $.post("<%=path%>/record/add.do", {
@@ -265,6 +313,31 @@
             console.log(result);
         }, "json");
     }
+
+    //设置网页打印的页眉页脚边距为空
+    function pagesetup_null() {
+        var hkey_key;
+        var hkey_root = "HKEY_CURRENT_USER";
+        var hkey_path = "\\software\\Microsoft\\Internet Explorer\\PageSetup\\";
+        try {
+            var RegWsh = new ActiveXObject("WScript.Shell");
+            hkey_key = "header";
+            RegWsh.RegWrite(hkey_root + hkey_path + hkey_key, "");
+            hkey_key = "footer";
+            RegWsh.RegWrite(hkey_root + hkey_path + hkey_key, "");
+            /*hkey_key = "margin_left";
+             RegWsh.RegWrite(hkey_root + hkey_path + hkey_key, "0.0");
+             hkey_key = "margin_right";
+             RegWsh.RegWrite(hkey_root + hkey_path + hkey_key, "0.0");
+             hkey_key = "margin_top";
+             RegWsh.RegWrite(hkey_root + hkey_path + hkey_key, "0.0");
+             hkey_key = "margin_bottom";
+             RegWsh.RegWrite(hkey_root + hkey_path + hkey_key, "0.0");*/
+        } catch (e) {
+            alert(e);
+        }
+    }
+
 
 </script>
 </body>
