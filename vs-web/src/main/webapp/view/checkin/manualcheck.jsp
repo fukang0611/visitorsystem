@@ -24,20 +24,30 @@
         <div class="col-md-9 col-md-offset-3 main">
             <h2 class="sub-header">手动录入访客信息</h2><br/>
 
-            <div class="form-group">
+            <div class="col-sm-4">
+                <form action="" method="post" class="form-inline">
 
-                <div class="col-sm-10">
-                    <label for="name">姓名</label>
-                    <input name="name" id="name" class="form-control"/>
-                </div>
-                <div class="col-sm-10">
-                    <label for="name">联系电话</label>
-                    <input name="name" id="name" class="form-control"/>
-                </div>
-                <div class="col-sm-10">
-                    <label for="name">姓名</label>
-                    <input name="name" id="name" class="form-control"/>
-                </div>
+                    <div class="form-group">
+                        <label for="name">姓名</label>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="">
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="col-sm-4">
+                <form action="" method="post" class="form-inline">
+
+                    <div class="form-group">
+                        <label for="tel">姓名</label>
+                        <input type="text" class="form-control" name="tel" id="tel" placeholder="">
+                    </div>
+
+
+                </form>
+            </div>
+
+            <div class="form-group">
 
                 <div class="col-sm-3">
                     <select name="business" id="business" class="form-control" onchange="getStaffOpts();">
@@ -148,34 +158,13 @@
             if (result.status == "success") {
                 var data = result.data;
                 console.log(data);
-                var html;
+                var html = "";
                 for (var i = 0; i < data.length; i++) {
                     html += "<option value='" + data[i].id + "'>" + data[i].name + " ( " + data[i].officeTel + " ) " + "</option>";
                 }
                 $staff.html(html);
             }
         })
-    }
-
-    function scanCard() {
-        //TODO 通过接口读取身份证信息
-        $.post("<%=path%>/visitor/scanInfo.do",
-                {
-                    "id": "410103199206111111",
-                    "name": "付康",
-                    "sex": "男",
-                    "location": "河南郑州"
-                },
-                function (result) {
-                    if (result.status == "success") {
-                        $("#id").html(result.id);
-                        $("#name").html(result.name);
-                        $("#sex").html(result.sex);
-                        $("#location").html(result.location);
-                    } else {
-                        alert("scan card failed!");
-                    }
-                }, "json");
     }
 
     function prePrint() {
@@ -215,8 +204,6 @@
         var staff = $("#print_staff").html();
         var officeTel = $("#print_officeTel").html();
         var printTime = $("#print_time").html();
-        var $printdata = [];
-        $printdata.push(name, sex, id, location, business, depart, staff, officeTel, printTime);
 
         $.post("<%=path%>/record/add.do", {
             id: id,

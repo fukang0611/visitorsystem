@@ -73,7 +73,7 @@
                     </select>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-info" onclick="readCard();">预览打印信息</button>
+                    <button class="btn btn-info" onclick="prePrint();">预览打印信息</button>
                 </div>
             </div>
         </div>
@@ -92,31 +92,31 @@
                     <table class="table table-bordered table-hover">
                         <tr>
                             <th class="text-center" width="15%">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</th>
-                            <td id="print_name" width="35%">付康</td>
+                            <td id="print_name" width="35%"></td>
                             <th class="text-center" width="15%">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</th>
-                            <td id="print_sex" width="35%">男</td>
+                            <td id="print_sex" width="35%"></td>
                         </tr>
                         <tr>
                             <th class="text-center">证件号码</th>
-                            <td id="print_id">410103199011100011</td>
-                            <th class="text-center">籍&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;贯</th>
-                            <td id="print_location">河南郑州</td>
+                            <td id="print_id"></td>
+                            <th class="text-center">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址</th>
+                            <td id="print_location"></td>
                         </tr>
                         <tr>
                             <th class="text-center">待办业务</th>
-                            <td id="print_business">民行</td>
+                            <td id="print_business"></td>
                             <th class="text-center">办事部门</th>
-                            <td id="print_depart">民行科</td>
+                            <td id="print_depart"></td>
                         </tr>
                         <tr>
                             <th class="text-center">办事人员</th>
-                            <td id="print_staff">王小虎</td>
+                            <td id="print_staff"></td>
                             <th class="text-center">办公电话</th>
-                            <td id="print_officeTel">2239</td>
+                            <td id="print_officeTel"></td>
                         </tr>
                         <tr>
                             <th class="text-center">来访时间</th>
-                            <td colspan="3" id="print_time">2015-12-31 15:33</td>
+                            <td colspan="3" id="print_time"></td>
                         </tr>
                     </table>
                 </div>
@@ -139,19 +139,22 @@
 <!-- javascript functions -->
 <script type="text/javascript">
 
-    var $business = $("#business");
-    var $staff = $("#staff");
+    // 全局变量定义
+    var $business = $("#business"); // 业务选择
+    var $staff = $("#staff");       // 员工选择
 
+    // 初始化完成后
     $(function () {
-        getDepartOpts();
+        getDepartOpts();// 得到部门数据
     });
 
+    // 得到部门选择列表
     function getDepartOpts() {
 
         $.post("<%=path%>/depart/getDepartOpts.do", function (result) {
             if (result.status == "success") {
                 var data = result.data;
-                var html;
+                var html = "";
                 for (var i = 0; i < data.length; i++) {
                     html += "<option value='" + data[i].code + "'>" + data[i].business + "----" + data[i].name + "</option>";
                 }
@@ -160,6 +163,7 @@
         })
     }
 
+    // 得到部门对应员工选择列表
     function getStaffOpts() {
 
         var code = $business.val();
@@ -180,41 +184,47 @@
         })
     }
 
-    function scanCard() {
-        //TODO 通过接口读取身份证信息
-        $.post("<%=path%>/visitor/scanInfo.do",
-                {
-                    "id": "410103199206111111",
-                    "name": "付康",
-                    "sex": "男",
-                    "location": "河南郑州"
-                },
-                function (result) {
-                    if (result.status == "success") {
-                        $("#id").html(result.id);
-                        $("#name").html(result.name);
-                        $("#sex").html(result.sex);
-                        $("#location").html(result.location);
-                    } else {
-                        alert("scan card failed!");
-                    }
-                }, "json");
+    //读取身份证信息
+    function readCard() {
+        var CVR_IDCard = document.getElementById("CVR_IDCard");
+        var strReadResult = CVR_IDCard.ReadCard();
+        if (strReadResult == "0") {
+            clearForm();
+            $("#id").html(CVR_IDCard.CardNo);
+            $("#name").html(CVR_IDCard.Name);
+            $("#sex").html(CVR_IDCard.Sex);
+            $("#location").html(CVR_IDCard.Address);
+        }
+        else {
+            clearForm();
+            alert(strReadResult);
+        }
     }
 
+    // 清空表单
+    function clearForm() {
+        $("#id").html();
+        $("#name").html();
+        $("#sex").html();
+        $("#location").html();
+    }
+
+    // 预览打印信息
     function prePrint() {
 
+        // 访客信息
         $("#print_name").html($("#name").html());
         $("#print_sex").html($("#sex").html());
         $("#print_id").html($("#id").html());
         $("#print_location").html($("#location").html());
-
+        // 业务信息
         $("#print_business").html($business.find("option:selected").text().substring(0, 2));
         $("#print_depart").html($business.find("option:selected").text().substring(6));
-
+        // 办事人员信息
         var staff_select = $staff.find("option:selected").text();
         $("#print_staff").html(staff_select.substring(0, 3));
         $("#print_officeTel").html($staff.find("option:selected").text().substring(staff_select.indexOf("(") + 1, staff_select.indexOf(")")));
-
+        // 日期信息
         var d = new Date();
         var datetime = (d.getFullYear() + "-" +
         ("0" + (d.getMonth() + 1)).slice(-2) + "-" +
@@ -222,13 +232,14 @@
         ("0" + d.getHours()).slice(-2) + ":" +
         ("0" + d.getMinutes()).slice(-2));
         $("#print_time").html(datetime);
-
+        // 显示模态框
         $('#printModal').modal('show');
-
     }
 
+    // 执行打印操作,同时增加来访记录
     function doPrint() {
 
+        // 获取打印信息
         var name = $("#print_name").html();
         var sex = $("#print_sex").html();
         var id = $("#print_id").html();
@@ -238,9 +249,8 @@
         var staff = $("#print_staff").html();
         var officeTel = $("#print_officeTel").html();
         var printTime = $("#print_time").html();
-        var $printdata = [];
-        $printdata.push(name, sex, id, location, business, depart, staff, officeTel, printTime);
 
+        // 增加来访记录
         $.post("<%=path%>/record/add.do", {
             id: id,
             name: name,
@@ -251,30 +261,6 @@
             console.log(result);
         }, "json");
     }
-
-    function ClearForm() {
-        $("#id").html();
-        $("#name").html();
-        $("#sex").html();
-        $("#location").html();
-    }
-
-    function readCard() {
-        var CVR_IDCard = document.getElementById("CVR_IDCard");
-        var strReadResult = CVR_IDCard.ReadCard();
-        if (strReadResult == "0") {
-            ClearForm();
-            $("#id").html(result.id);
-            $("#name").html(result.name);
-            $("#sex").html(result.sex);
-            $("#location").html(result.location);
-        }
-        else {
-            ClearForm();
-            alert(strReadResult);
-        }
-    }
-
 
 </script>
 </body>

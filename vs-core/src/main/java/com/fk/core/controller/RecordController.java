@@ -69,15 +69,15 @@ public class RecordController {
         } else {
             visitor = iVisitorService.getVisitorByID(visitor.getId());
         }
-        StaffModel staff = iStaffService.getStaffByID(staffID); // 获取员工对象
         // 实例化访客记录对象并插入数据
         RecordModel record = new RecordModel();
         record.setVisitDate(new Date());
         record.setVisitor(visitor);
+        StaffModel staff = iStaffService.getStaffByID(staffID);
         record.setStaff(staff.getName());
         record.setBusiness(staff.getDepart().getBusiness());
         boolean result = iRecordService.addRecord(record);
-        return result ? "success" : "fail";
+        return result ? "success" : "failure";
     }
 
 }
