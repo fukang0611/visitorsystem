@@ -41,9 +41,9 @@ public class VisitorController {
         Map<String, String> result = new HashMap<>();
         // 若该访客首次来访,则增加访客信息
         if (iVisitorService.getVisitorByID(visitor.getId()) == null) {
-            // 创建日期,照片文件名[姓名+身份证号前六位数]
+            // 创建日期,照片文件名[姓名+身份证号前六位数] eg:丁博123456.jpg
             visitor.setCreateTime(new Date());
-            visitor.setPhoto(visitor.getName() + visitor.getId().substring(0, 5));
+            visitor.setPhoto(visitor.getName() + visitor.getId().substring(0, 6) + ".jpg");
             // 图片在服务器目录下的相对路径
             String imgUrl = savePhoto(request, visitor.getPhoto(), imgCode);
             // 新增该访客对象到数据库
@@ -54,7 +54,7 @@ public class VisitorController {
         } else { // 若有该访客记录,则取出
             visitor = iVisitorService.getVisitorByID(visitor.getId());
             result.put("status", "success");
-            result.put("img", visitor.getPhoto());
+            result.put("img", "img\\photo\\" + visitor.getPhoto());
         }
         return result;
     }
@@ -111,7 +111,7 @@ public class VisitorController {
         boolean res = DecodeImage.GenerateImage(imgCode, imgPath, imgName);
         // 解码成功则返回图片存储相对路径,否则返回null
         if (res) {
-            return relativePath;
+            return relativePath; // img\photo\丁博371426.jpg
         } else {
             return null;
         }

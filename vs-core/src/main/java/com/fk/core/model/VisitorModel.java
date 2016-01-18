@@ -33,12 +33,10 @@ public class VisitorModel {
     private String organization; // 发证机关
 
     @Column(name = "VALIDATE_BEGIN")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date validateBegin; // 起始有效期
+    private String validateBegin; // 起始有效期
 
     @Column(name = "VALIDATE_END")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date validateEnd; // 截止有效期
+    private String validateEnd; // 截止有效期
 
     @Column(name = "LOCATION")
     private String location; // 住址
@@ -59,7 +57,7 @@ public class VisitorModel {
     public VisitorModel() {
     }
 
-    public VisitorModel(String id, String name, String sex, String born, String nation, String organization, Date validateBegin, Date validateEnd, String location, String photo, String tel, Date createTime, Set<RecordModel> records) {
+    public VisitorModel(String id, String name, String sex, String born, String nation, String organization, String validateBegin, String validateEnd, String location, String photo, String tel, Date createTime, Set<RecordModel> records) {
         this.id = id;
         this.name = name;
         this.sex = sex;
@@ -124,19 +122,19 @@ public class VisitorModel {
         this.organization = organization;
     }
 
-    public Date getValidateBegin() {
+    public String getValidateBegin() {
         return validateBegin;
     }
 
-    public void setValidateBegin(Date validateBegin) {
+    public void setValidateBegin(String validateBegin) {
         this.validateBegin = validateBegin;
     }
 
-    public Date getValidateEnd() {
+    public String getValidateEnd() {
         return validateEnd;
     }
 
-    public void setValidateEnd(Date validateEnd) {
+    public void setValidateEnd(String validateEnd) {
         this.validateEnd = validateEnd;
     }
 
