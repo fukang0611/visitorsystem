@@ -50,7 +50,7 @@ public class VisitorController {
             boolean res = iVisitorService.addVisitor(visitor);
             // 填入返回数据
             result.put("status", res ? "success" : "failure");
-            result.put("img", imgUrl == null ? "" : imgUrl);
+            result.put("img", imgUrl == null ? "#" : imgUrl);
         } else { // 若有该访客记录,则取出
             visitor = iVisitorService.getVisitorByID(visitor.getId());
             result.put("status", "success");

@@ -57,7 +57,7 @@
                     </table>
                 </div>
                 <div class="col-sm-2">
-                    <img id="photo" src="<%=path%>/img/photo/photo.jpg" class="img-rounded pull-right"
+                    <img id="photo" src="<%=path%>/img/photo/photo_default.png" class="img-rounded pull-right"
                          style="max-height: 150px;">
                 </div>
             </div>
