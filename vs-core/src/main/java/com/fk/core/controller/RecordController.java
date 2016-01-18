@@ -55,30 +55,27 @@ public class RecordController {
     /**
      * 新增访客记录
      *
-     * @param visitor 访客对象
+     * @param id      访客身份证号
      * @param staffID 办事人员ID
-     * @return 操作记录
+     * @return 操作结果
      */
     @RequestMapping("/add")
     @ResponseBody
-    private Object add(VisitorModel visitor, String staffID) {
+    private Object add(String id, String staffID) {
 
-        // 若该访客数据不存在(首次来访),则增加访客对象
-        if (iVisitorService.getVisitorByID(visitor.getId()) == null) {
-            visitor.setCreateTime(new Date());
-            iVisitorService.addVisitor(visitor);
-        } else {
-            visitor = iVisitorService.getVisitorByID(visitor.getId());
-        }
-        // 实例化访客记录对象并插入数据
+        // 得到访客
+        VisitorModel visitor = iVisitorService.getVisitorByID(id);
+        // 得到员工
+        StaffModel staff = iStaffService.getStaffByID(staffID);
+        //region 实例化访客记录对象并插入数据
         RecordModel record = new RecordModel();
-        StaffModel staff = iStaffService.getStaffByID(staffID); // 员工
         record.setVisitDate(new Date());
         record.setVisitor(visitor);
         record.setStaff(staff.getName());
         record.setBusiness(staff.getDepart().getBusiness());
+        //endregion
+        // 保存访客记录
         boolean result = iRecordService.addRecord(record);
-
         return result ? "success" : "failure";
     }
 

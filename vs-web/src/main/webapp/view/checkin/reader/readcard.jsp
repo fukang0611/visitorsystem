@@ -16,11 +16,15 @@
     <link href="<%=path%>/libs/css/dashboard.css" rel="stylesheet">
 </head>
 <body>
-<OBJECT classid="clsid:10946843-7507-44FE-ACE8-2B3483D179B7"
+<!-- 身份证读取器插件/打印插件 -->
+<OBJECT CLASSID="CLSID:10946843-7507-44FE-ACE8-2B3483D179B7"
         id="CVR_IDCard" name="CVR_IDCard" width="0" height="0">
 </OBJECT>
-<OBJECT classid="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2"
+<OBJECT CLASSID="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2"
         id="WebBrowser" name="WebBrowser" width=0 height=0>
+</OBJECT>
+<OBJECT CLASSID="CLSID:B43D3361-D075-4BE2-87FE-057188254255"
+        id="jatoolsPrinter" codebase="jatoolsPrinter.cab#version=8,6,0,0" width=0 height=0>
 </OBJECT>
 <!-- 页面主体 -->
 <div class="container-fluid">
@@ -29,12 +33,13 @@
         <!-- 主体内容 -->
         <div class="col-md-9 col-md-offset-3 main">
             <h2 class="sub-header">访客信息扫描</h2><br/>
-
+            <!-- 身份证信息表格及读取按钮 -->
             <div class="row">
                 <div class="col-sm-8">
                     <table class="table table-hover table-bordered">
                         <tr>
-                            <th class="text-center">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名:</th>
+                            <th class="text-center" style="width: 20%">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名:
+                            </th>
                             <td id="name"></td>
                         </tr>
                         <tr>
@@ -47,13 +52,13 @@
                         </tr>
                         <tr>
                             <th class="text-center">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址:</th>
-                            <td id="location">河南省郑州市二七区陇海路2号三单元4楼</td>
+                            <td id="location"></td>
                         </tr>
                     </table>
                 </div>
                 <div class="col-sm-2">
-                    <img class="img-rounded pull-right" style="max-height: 150px;"
-                         src="<%=path%>/img/photo.jpg">
+                    <img id="photo" src="<%=path%>/img/photo/photo.jpg" class="img-rounded pull-right"
+                         style="max-height: 150px;">
                 </div>
             </div>
             <div class="row">
@@ -64,7 +69,7 @@
             <br/>
 
             <h2 class="sub-header">办事业务选择</h2><br/>
-
+            <!-- 办事业务信息及打印预览按钮 -->
             <div class="form-group">
                 <div class="col-sm-3">
                     <select name="business" id="business" class="form-control" onchange="getStaffOpts();">
@@ -132,46 +137,48 @@
         </div>
     </div>
     <!-- 打印预览模态框 结束 -->
-    <!-- 打印区域 -->
-    <table id="print_area" class="table table-hover hidden" style="border-style: none">
-        <tr>
-            <th class="text-center" width="15%">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</th>
-            <td id="print_name" width="35%"></td>
-        </tr>
-        <tr>
-            <th class="text-center">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</th>
-            <td id="print_sex"></td>
-        </tr>
-        <tr>
-            <th class="text-center">证件号码</th>
-            <td id="print_id"></td>
-        </tr>
-        <tr>
-            <th class="text-center">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址</th>
-            <td id="print_location"></td>
-        </tr>
-        <tr>
-            <th class="text-center">来访时间</th>
-            <td id="print_time"></td>
-        </tr>
-        <tr>
-            <th class="text-center">待办业务</th>
-            <td id="print_business"></td>
-        </tr>
-        <tr>
-            <th class="text-center">办事部门</th>
-            <td id="print_depart"></td>
-        </tr>
-        <tr>
-            <th class="text-center">办事人员</th>
-            <td id="print_staff"></td>
-        </tr>
-        <tr>
-            <th class="text-center">办公电话</th>
-            <td id="print_officeTel"></td>
-        </tr>
-    </table>
-    <!-- 打印区域 结束 -->
+    <!-- 实际打印区域 -->
+    <div id="page1" style="width: 80mm;height: 50mm;">
+        <table id="print_area" class="table table-hover hidden">
+            <tr>
+                <th class="text-center" width="15%">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</th>
+                <td id="print_name" width="35%"></td>
+            </tr>
+            <tr>
+                <th class="text-center">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</th>
+                <td id="print_sex"></td>
+            </tr>
+            <tr>
+                <th class="text-center">证件号码</th>
+                <td id="print_id"></td>
+            </tr>
+            <tr>
+                <th class="text-center">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址</th>
+                <td id="print_location"></td>
+            </tr>
+            <tr>
+                <th class="text-center">来访时间</th>
+                <td id="print_time"></td>
+            </tr>
+            <tr>
+                <th class="text-center">待办业务</th>
+                <td id="print_business"></td>
+            </tr>
+            <tr>
+                <th class="text-center">办事部门</th>
+                <td id="print_depart"></td>
+            </tr>
+            <tr>
+                <th class="text-center">办事人员</th>
+                <td id="print_staff"></td>
+            </tr>
+            <tr>
+                <th class="text-center">办公电话</th>
+                <td id="print_officeTel"></td>
+            </tr>
+        </table>
+    </div>
+    <!-- 实际打印区域 结束 -->
 </div>
 <!-- 页面主体 结束 -->
 <!-- jquery core -->
@@ -232,14 +239,44 @@
 
     //读取身份证信息
     function readCard() {
+        // 读卡器
         var CVR_IDCard = document.getElementById("CVR_IDCard");
+        // 读取结果,0为正常,其他为各种错误
         var strReadResult = CVR_IDCard.ReadCard();
+        // 若读取正常,则取出所需身份证信息
         if (strReadResult == "0") {
-            clearForm();
-            $("#id").html(CVR_IDCard.CardNo);
-            $("#name").html(CVR_IDCard.Name);
-            $("#sex").html(CVR_IDCard.Sex);
-            $("#location").html(CVR_IDCard.Address);
+            var $id = CVR_IDCard.CardNo;                  // 身份证号
+            var $name = CVR_IDCard.Name;                  // 姓名
+            var $sex = CVR_IDCard.Sex;                    // 性别
+            var $born = CVR_IDCard.Born;                  // 出生日期
+            var $nation = CVR_IDCard.Nation;              // 民族
+            var $location = CVR_IDCard.Address;           // 地址
+            var $imgCode = CVR_IDCard.Picture;            // 头像照片jpg转换编码(base64)
+            var $validateBegin = CVR_IDCard.EffectedDate; // 起始有效期
+            var $validateEnd = CVR_IDCard.ExpiredDate;    // 终止有效期
+            var $organization = CVR_IDCard.IssuedAt;      // 发证机关
+            // 提交服务器处理,并根据返回结果进行处理
+            $.post("<%=path%>/visitor/scanInfo.do", {
+                id: $id,
+                name: $name,
+                sex: $sex,
+                born: $born,
+                nation: $nation,
+                location: $location,
+                imgCode: $imgCode,
+                validateBegin: $validateBegin,
+                validateEnd: $validateEnd,
+                organization: $organization
+            }, function (result) {
+                if (result.status == "success") {
+                    clearForm();
+                    $("#id").html($id);
+                    $("#name").html($name);
+                    $("#sex").html($sex);
+                    $("#location").html($location);
+                    $("#photo").attr("src", "<%=path%>/" + result.img); // 显示照片
+                }
+            }, "json");
         }
         else {
             clearForm();
@@ -285,33 +322,36 @@
     // 执行打印操作,同时增加来访记录
     function doPrint() {
 
-        // 获取打印信息
-        var name = $("#print_name").html();
-        var sex = $("#print_sex").html();
-        var id = $("#print_id").html();
-        var location = $("#print_location").html();
-        var business = $("#print_business").html();
-        var depart = $("#print_depart").html();
-        var staff = $("#print_staff").html();
-        var officeTel = $("#print_officeTel").html();
-        var printTime = $("#print_time").html();
-
-        // jqprint 插件打印
-        pagesetup_null();
+        // 将打印区域的隐藏类去掉
         $("#print_area").removeClass('hidden');
-        $("#print_area").jqprint({operaSupport: false});
-        $("#print_area").addClass('hidden');
+
+        <!--jqprint 插件打印-->
+        //pagesetup_null();
+        //$("#print_area").jqprint({operaSupport: false});
+
+        <!--jatoolsPrint 打印-->
+        doJatoolsPrint();
+
+        // 将打印区域再次增加隐藏类
+        //$("#print_area").addClass('hidden');
 
         // 增加来访记录
         $.post("<%=path%>/record/add.do", {
-            id: id,
-            name: name,
-            sex: sex,
-            location: location,
+            id: $("#print_id").html(),
             staffID: $staff.val()
         }, function (result) {
             console.log(result);
         }, "json");
+    }
+
+    // jatoolsPrinter 打印插件
+    function doJatoolsPrint() {
+        myDoc = {
+            documents: document,
+            copyrights: '杰创软件拥有版权  www.jatools.com' // 版权声明,必须
+        };
+        //jatoolsPrinter.print(myDoc, false); // 直接打印，不弹出打印机设置对话框
+        jatoolsPrinter.printPreview(myDoc); // 打印预览
     }
 
     //设置网页打印的页眉页脚边距为空
@@ -337,7 +377,6 @@
             alert(e);
         }
     }
-
 
 </script>
 </body>
