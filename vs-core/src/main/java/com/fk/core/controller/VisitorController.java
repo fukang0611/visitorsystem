@@ -50,7 +50,7 @@ public class VisitorController {
             boolean res = iVisitorService.addVisitor(visitor);
             // 填入返回数据
             result.put("status", res ? "success" : "failure");
-            result.put("img", imgUrl == null ? "#" : imgUrl);
+            result.put("img", imgUrl == null ? "img\\photo\\photo_default.jpg" : imgUrl);
         } else { // 若有该访客记录,则取出
             visitor = iVisitorService.getVisitorByID(visitor.getId());
             result.put("status", "success");
@@ -111,7 +111,7 @@ public class VisitorController {
         boolean res = DecodeImage.GenerateImage(imgCode, imgPath, imgName);
         // 解码成功则返回图片存储相对路径,否则返回null
         if (res) {
-            return relativePath; // img\photo\丁博371426.jpg
+            return relativePath; // "img\photo\丁博371426.jpg"
         } else {
             return null;
         }

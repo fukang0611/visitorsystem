@@ -1,6 +1,7 @@
 package com.fk.core.model;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
@@ -18,6 +19,7 @@ public class RecordModel {
 
     @Column(name = "VISIT_DATE")
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date visitDate; // 来访日期
 
     @ManyToOne(cascade = CascadeType.ALL, targetEntity = VisitorModel.class, fetch = FetchType.EAGER)

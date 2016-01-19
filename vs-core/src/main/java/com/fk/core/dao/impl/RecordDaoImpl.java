@@ -10,6 +10,9 @@ import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -65,6 +68,32 @@ public class RecordDaoImpl implements IRecordDao {
         // 得到访客记录总数
         Query queryRows = session.createQuery("select count(*) " + hql);
         queryRows.setParameter("name", "%" + name + "%");
+        pager.setTotalRows((Long) queryRows.uniqueResult());
+
+        return query.list();
+    }
+
+    @Override
+    public List getRecords(Pager pager, Date date) {
+
+        String name = stringHandler.isStrNullOrEmpty(pager.getSearch()) ? "" : pager.getSearch(); // 访客姓名
+        String sort = stringHandler.isStrNullOrEmpty(pager.getSort()) ? "visitDate" : pager.getSort(); // 排序字段
+
+        Session session = factory.getCurrentSession();
+        String hql = "from RecordModel r where r.visitor.name like :name and Date(r.visitDate) = :date ";
+        hql += " order by " + sort + " " + pager.getOrder();
+
+        // 得到访客记录列表
+        Query query = session.createQuery(hql);
+        query.setParameter("name", "%" + name + "%");
+        query.setDate("date", date);
+        query.setFirstResult(pager.getOffset());
+        query.setMaxResults(pager.getLimit());
+
+        // 得到访客记录总数
+        Query queryRows = session.createQuery("select count(*) " + hql);
+        queryRows.setParameter("name", "%" + name + "%");
+        queryRows.setDate("date", date);
         pager.setTotalRows((Long) queryRows.uniqueResult());
 
         return query.list();

@@ -3,6 +3,7 @@ package com.fk.core.service;
 import com.fk.core.model.RecordModel;
 import com.fk.core.utils.Pager;
 
+import java.util.Date;
 import java.util.List;
 
 public interface IRecordService {
@@ -20,5 +21,7 @@ public interface IRecordService {
     RecordModel getRecord(String id);
 
     List getRecords(Pager pager);
+
+    List getRecords(Pager pager, Date date);
 
 }

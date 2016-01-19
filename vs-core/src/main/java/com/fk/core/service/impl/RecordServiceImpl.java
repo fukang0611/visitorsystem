@@ -7,6 +7,7 @@ import com.fk.core.utils.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -48,5 +49,10 @@ public class RecordServiceImpl implements IRecordService {
     @Override
     public List getRecords(Pager pager) {
         return iRecordDao.getRecords(pager);
+    }
+
+    @Override
+    public List getRecords(Pager pager, Date date) {
+        return iRecordDao.getRecords(pager, date);
     }
 }

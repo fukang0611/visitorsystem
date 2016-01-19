@@ -1,11 +1,15 @@
 package com.fk.vs;
 
+import com.fk.core.controller.RecordController;
 import com.fk.core.controller.VisitorController;
+import com.fk.core.utils.Pager;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -28,11 +32,19 @@ public class ControllerTest {
 
     @Autowired
     private WebApplicationContext wac;
+    @Autowired
+    private RecordController recordController;
     private MockMvc mockMvc;
+    private MockHttpServletRequest request;
+    private MockHttpServletResponse response;
 
     @Before
     public void setUp() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
+        // mockMvc = MockMvcBuilders.standaloneSetup(recordController).build(); // 独立测试,直接调用controller方法
+        mockMvc = MockMvcBuilders.webAppContextSetup(wac).build(); // 在web环境下测试,通过请求url
+        request = new MockHttpServletRequest();
+        request.setCharacterEncoding("UTF-8");
+        response = new MockHttpServletResponse();
     }
 
     @Test
@@ -45,5 +57,30 @@ public class ControllerTest {
                 .andReturn();
 
 //        Assert.assertNotNull(result.getModelAndView().getModel().get("user"));
+    }
+
+    @Test
+    public void testAddRecord() throws Exception {
+
+        try {
+            String id = "41010319920611011X";
+            String staffID = "4028b881520acd2a01520b02780c0000";
+            Assert.assertEquals("success", recordController.add(id, staffID));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testTodayVisit() throws Exception {
+
+        Pager pager = new Pager(null, null, "asc", 10, 0, null);
+        mockMvc.perform(MockMvcRequestBuilders.post("/record/today.do").characterEncoding("UTF-8")
+                .param("order", pager.getOrder())
+                .param("limit", pager.getLimit().toString())
+                .param("offset", pager.getOffset().toString()))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
     }
 }
