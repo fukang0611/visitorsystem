@@ -64,7 +64,7 @@
             case "todayvisit":
                 $("#todayvisit").addClass("active");
                 $("#scancard,#manualcheck,#todayfeedback").removeClass("active");
-                $iframe.attr("src", "<%=path%>/view/checkin/reader/todayvisit.html");
+                $iframe.attr("src", "<%=path%>/view/checkin/todayvisit.jsp");
                 break;
             case "todayfeedback":
                 $("#todayfeedback").addClass("active");

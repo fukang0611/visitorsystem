@@ -19,7 +19,7 @@ public class RecordModel {
 
     @Column(name = "VISIT_DATE")
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date visitDate; // 来访日期
 
     @ManyToOne(cascade = CascadeType.ALL, targetEntity = VisitorModel.class, fetch = FetchType.EAGER)
@@ -54,7 +54,7 @@ public class RecordModel {
     }
 
     public String getVisitDate() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         return sdf.format(this.visitDate);
     }
 
