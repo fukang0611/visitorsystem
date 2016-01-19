@@ -24,7 +24,7 @@
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar text-center">
                 <li id="scancard" class="active"><a href="javascript:changeIframe('scancard');">扫描登记</a></li>
-                <li id="manualcheck"><a href="javascript:changeIframe('manualcheck');">手动录入</a></li>
+                <%--<li id="manualcheck"><a href="javascript:changeIframe('manualcheck');">手动录入</a></li>--%>
                 <li id="todayvisit"><a href="javascript:changeIframe('todayvisit');">今日来访</a></li>
                 <li id="todayfeedback"><a href="javascript:changeIframe('todayfeedback');">今日反馈</a></li>
             </ul>

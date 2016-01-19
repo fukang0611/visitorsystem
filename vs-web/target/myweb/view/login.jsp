@@ -14,6 +14,7 @@
     <link href="<%=path%>/libs/formValidator/bootstrapValidator.css" rel="stylesheet">
 </head>
 <body>
+<%--<img class="img-responsive center-block" src="<%=path%>/img/login/banner3.jpg">--%>
 <div class="container">
     <img class="img-responsive center-block" src="<%=path%>/img/login/banner.jpg">
 

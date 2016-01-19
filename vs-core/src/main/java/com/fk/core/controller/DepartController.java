@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.*;
 
 /**
- * 部门管理控制器
+ * 部门管理控制器.
  *
  * @author fukang 2016.01.06
  */
