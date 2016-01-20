@@ -98,6 +98,82 @@
                     <h4 class="modal-title" id="printModalLabel">访客信息打印预览</h4>
                 </div>
                 <div class="modal-body">
+                    <%--<div id="page1" style="width: 70mm;height: 50mm">
+                        <table id="preview_area" class="table table-hover" style="font-size: .3cm;">
+                            &lt;%&ndash;<tr style="padding-left: .5cm">&ndash;%&gt;
+                            <tr>
+                                <th class="text-center" width="15%" style="padding: 0;margin-left: .5cm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</th>
+                                <td id="preview_name" width="85%" style="padding: 0;padding-left:.5cm"></td>
+                            </tr>
+                            &lt;%&ndash;<tr style="padding-left: .5cm">&ndash;%&gt;
+                            <tr>
+                                <th class="text-center" style="padding: 0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</th>
+                                <td id="preview_sex" style="padding: 0;padding-left:.5cm"></td>
+                            </tr>
+                            &lt;%&ndash;<tr style="padding-left: .5cm">&ndash;%&gt;
+                            <tr>
+                                <th class="text-center" style="padding: 0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;证件号码</th>
+                                <td id="preview_id" style="padding: 0;padding-left:.5cm"></td>
+                            </tr>
+                            &lt;%&ndash;<tr>
+                                <th class="text-center" style="padding: 0">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址</th>
+                                <td id="preview_location" style="padding: 0"></td>
+                            </tr>&ndash;%&gt;
+                            &lt;%&ndash;<tr style="padding-left: .5cm">&ndash;%&gt;
+                            <tr>
+                                <th class="text-center" style="padding: 0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;来访时间</th>
+                                <td id="preview_time" style="padding: 0;padding-left:.5cm"></td>
+                            </tr>
+                            &lt;%&ndash;<tr style="padding-left: .5cm">&ndash;%&gt;
+                            <tr>
+                                <th class="text-center" style="padding: 0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;待办业务</th>
+                                <td id="preview_business" style="padding: 0;padding-left:.5cm"></td>
+                            </tr>
+                            &lt;%&ndash;<tr style="padding-left: .5cm">&ndash;%&gt;
+                            <tr>
+                                <th class="text-center" style="padding: 0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;办事部门</th>
+                                <td id="preview_depart" style="padding: 0;padding-left:.5cm"></td>
+                            </tr>
+                            &lt;%&ndash;<tr style="padding-left: .5cm">&ndash;%&gt;
+                            <tr>
+                                <th class="text-center" style="padding: 0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;办事人员</th>
+                                <td id="preview_staff" style="padding: 0;padding-left:.5cm"></td>
+                            </tr>
+                            &lt;%&ndash;<tr style="padding-left: .5cm">&ndash;%&gt;
+                            <tr>
+                                <th class="text-center" style="padding: 0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;办公电话</th>
+                                <td id="preview_officeTel" style="padding: 0;padding-left:.5cm"></td>
+                            </tr>
+                            &lt;%&ndash;<tr>
+                                <th class="text-center" width="15%">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</th>
+                                <td id="preview_name" width="35%"></td>
+                                <th class="text-center" width="15%">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</th>
+                                <td id="preview_sex" width="35%"></td>
+                            </tr>
+                            <tr>
+                                <th class="text-center">证件号码</th>
+                                <td id="preview_id"></td>
+                                <th class="text-center">来访时间</th>
+                                <td id="preview_time"></td>
+                            </tr>
+                            <tr>
+                                <th class="text-center">待办业务</th>
+                                <td id="preview_business"></td>
+                                <th class="text-center">办事部门</th>
+                                <td id="preview_depart"></td>
+                            </tr>
+                            <tr>
+                                <th class="text-center">办事人员</th>
+                                <td id="preview_staff"></td>
+                                <th class="text-center">办公电话</th>
+                                <td id="preview_officeTel"></td>
+                            </tr>
+                            <tr>
+                                <th class="text-center">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址</th>
+                                <td colspan="3" id="preview_location"></td>
+                            </tr>&ndash;%&gt;
+                        </table>
+                    </div>--%><!--此方法用于打印-->
                     <table id="preview_area" class="table table-bordered table-hover">
                         <tr>
                             <th class="text-center" width="15%">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</th>
@@ -128,6 +204,7 @@
                             <td colspan="3" id="preview_location"></td>
                         </tr>
                     </table>
+                    <%--此方法可以预览，不可以打印，偏大--%>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -138,45 +215,84 @@
     </div>
     <!-- 打印预览区域 结束 -->
     <!-- 实际打印区域 -->
-    <div id="page1" style="width: 80mm;height: 50mm;">
-        <table id="print_area" class="table table-hover hidden">
-            <tr>
-                <th class="text-center" width="15%">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</th>
-                <td id="print_name" width="35%"></td>
-            </tr>
-            <tr>
-                <th class="text-center">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</th>
-                <td id="print_sex"></td>
-            </tr>
-            <tr>
-                <th class="text-center">证件号码</th>
-                <td id="print_id"></td>
-            </tr>
-            <tr>
-                <th class="text-center">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址</th>
-                <td id="print_location"></td>
-            </tr>
-            <tr>
-                <th class="text-center">来访时间</th>
-                <td id="print_time"></td>
-            </tr>
-            <tr>
-                <th class="text-center">待办业务</th>
-                <td id="print_business"></td>
-            </tr>
-            <tr>
-                <th class="text-center">办事部门</th>
-                <td id="print_depart"></td>
-            </tr>
-            <tr>
-                <th class="text-center">办事人员</th>
-                <td id="print_staff"></td>
-            </tr>
-            <tr>
-                <th class="text-center">办公电话</th>
-                <td id="print_officeTel"></td>
-            </tr>
-        </table>
+    <div id="print_area" class="hidden">
+        <div id="page1" style="width: 70mm;height: 50mm">
+            <table class="table table-hover" style="font-size: .3cm;">
+                <%--<tr style="padding-left: .5cm">--%>
+                <tr>
+                    <th class="text-center" width="15%" style="padding: 0;margin-left: .5cm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</th>
+                    <td id="print_name" width="85%" style="padding: 0;padding-left:.5cm"></td>
+                </tr>
+                <%--<tr style="padding-left: .5cm">--%>
+                <tr>
+                    <th class="text-center" style="padding: 0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</th>
+                    <td id="print_sex" style="padding: 0;padding-left:.5cm"></td>
+                </tr>
+                <%--<tr style="padding-left: .5cm">--%>
+                <tr>
+                    <th class="text-center" style="padding: 0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;证件号码</th>
+                    <td id="print_id" style="padding: 0;padding-left:.5cm"></td>
+                </tr>
+                <%--<tr>
+                    <th class="text-center" style="padding: 0">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址</th>
+                    <td id="preview_location" style="padding: 0"></td>
+                </tr>--%>
+                <%--<tr style="padding-left: .5cm">--%>
+                <tr>
+                    <th class="text-center" style="padding: 0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;来访时间</th>
+                    <td id="print_time" style="padding: 0;padding-left:.5cm"></td>
+                </tr>
+                <%--<tr style="padding-left: .5cm">--%>
+                <tr>
+                    <th class="text-center" style="padding: 0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;待办业务</th>
+                    <td id="print_business" style="padding: 0;padding-left:.5cm"></td>
+                </tr>
+                <%--<tr style="padding-left: .5cm">--%>
+                <tr>
+                    <th class="text-center" style="padding: 0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;办事部门</th>
+                    <td id="print_depart" style="padding: 0;padding-left:.5cm"></td>
+                </tr>
+                <%--<tr style="padding-left: .5cm">--%>
+                <tr>
+                    <th class="text-center" style="padding: 0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;办事人员</th>
+                    <td id="print_staff" style="padding: 0;padding-left:.5cm"></td>
+                </tr>
+                <%--<tr style="padding-left: .5cm">--%>
+                <tr>
+                    <th class="text-center" style="padding: 0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;办公电话</th>
+                    <td id="print_officeTel" style="padding: 0;padding-left:.5cm"></td>
+                </tr>
+                <%--<tr>
+                    <th class="text-center" width="15%">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</th>
+                    <td id="preview_name" width="35%"></td>
+                    <th class="text-center" width="15%">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</th>
+                    <td id="preview_sex" width="35%"></td>
+                </tr>
+                <tr>
+                    <th class="text-center">证件号码</th>
+                    <td id="preview_id"></td>
+                    <th class="text-center">来访时间</th>
+                    <td id="preview_time"></td>
+                </tr>
+                <tr>
+                    <th class="text-center">待办业务</th>
+                    <td id="preview_business"></td>
+                    <th class="text-center">办事部门</th>
+                    <td id="preview_depart"></td>
+                </tr>
+                <tr>
+                    <th class="text-center">办事人员</th>
+                    <td id="preview_staff"></td>
+                    <th class="text-center">办公电话</th>
+                    <td id="preview_officeTel"></td>
+                </tr>
+                <tr>
+                    <th class="text-center">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址</th>
+                    <td colspan="3" id="preview_location"></td>
+                </tr>--%>
+            </table>
+        </div>
+        <!--此方法用于打印-->
     </div>
     <!-- 实际打印区域 结束 -->
 </div>

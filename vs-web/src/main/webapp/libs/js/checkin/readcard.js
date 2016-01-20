@@ -145,18 +145,25 @@ function doPrint() {
         id: $("#print_id").html(),
         staffID: $staff.val()
     }, function (result) {
-        alert(result);
+        if(result=="success"){
+            $("#print_area").addClass('hidden');
+            $('#printModal').modal('hide');
+            alert("打印成功！");
+            clearForm();
+        }
     }, "json");
 }
 
 // jatoolsPrinter 打印插件
 function doJatoolsPrint() {
     myDoc = {
+        //settings:{paperName:'70×50'},
         documents: document,
         copyrights: '杰创软件拥有版权  www.jatools.com' // 版权声明,必须
     };
-    //jatoolsPrinter.print(myDoc, false); // 直接打印,不弹出打印机设置对话框
-    jatoolsPrinter.printPreview(myDoc);   // 打印预览,调试阶段使用该模式,确保无误后使用直接打印模式
+    jatoolsPrinter.print(myDoc, false); // 直接打印,不弹出打印机设置对话框
+    //jatoolsPrinter.print(myDoc, true);
+    //jatoolsPrinter.printPreview(myDoc);   // 打印预览,调试阶段使用该模式,确保无误后使用直接打印模式
 }
 
 //设置网页打印的页眉页脚边距为空
